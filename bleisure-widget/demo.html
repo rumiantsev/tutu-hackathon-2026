@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bleisure-калькулятор — демо</title>
   <link rel="stylesheet" href="widget.css" />
+  <link rel="stylesheet" href="../bleisure-quiz/widget.css" />
   <style>
     body {
       margin: 0;
@@ -55,6 +56,20 @@
     .status { font-size: 13px; color: #6b7280; }
     .status--error { color: #d33; }
     .hint { font-size: 11px; color: #9aa1ad; }
+
+    .mode-toggle { display: inline-flex; border: 1px solid #d9dce3; border-radius: 10px; overflow: hidden; }
+    .mode-btn {
+      padding: 8px 16px;
+      border: none;
+      background: #fff;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: #6b7280;
+      font-family: inherit;
+    }
+    .mode-btn + .mode-btn { border-left: 1px solid #d9dce3; }
+    .mode-btn.is-active { background: #2f6fed; color: #fff; }
 
     .demo-block .demo-label {
       font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
@@ -118,6 +133,10 @@
         </div>
       </div>
       <div class="form-actions">
+        <div class="mode-toggle" id="mode-toggle">
+          <button class="mode-btn is-active" data-mode="list">Список</button>
+          <button class="mode-btn" data-mode="quiz">Квиз</button>
+        </div>
         <button class="run-btn" id="run">Рассчитать</button>
         <span class="status" id="status"></span>
       </div>
@@ -130,10 +149,12 @@
   </div>
 
   <script src="widget.js"></script>
+  <script src="../bleisure-quiz/widget.js"></script>
   <script>
     var root = document.getElementById('widget-root');
     var runBtn = document.getElementById('run');
     var status = document.getElementById('status');
+    var mode = 'list';
 
     function setStatus(text, isError) {
       status.textContent = text || '';
@@ -171,7 +192,10 @@
       setStatus('Считаем…');
       showLoading();
 
-      fetch('/api/bleisure?' + params.toString())
+      var endpoint = mode === 'quiz' ? '/api/bleisure-quiz' : '/api/bleisure';
+      var Widget = mode === 'quiz' ? window.BleisureQuiz : window.BleisureWidget;
+
+      fetch(endpoint + '?' + params.toString())
         .then(function (r) { return r.json(); })
         .then(function (data) {
           if (data.error) {
@@ -180,7 +204,7 @@
             resetButton();
             return;
           }
-          BleisureWidget.init(root, data);
+          Widget.init(root, data);
           setStatus('Готово · ' + data.trip.headline);
           resetButton();
         })
@@ -190,6 +214,18 @@
           showError(msg);
           resetButton();
         });
+    }
+
+    var modeBtns = document.querySelectorAll('#mode-toggle .mode-btn');
+    for (var i = 0; i < modeBtns.length; i++) {
+      (function (b) {
+        b.addEventListener('click', function () {
+          for (var j = 0; j < modeBtns.length; j++) modeBtns[j].classList.remove('is-active');
+          b.classList.add('is-active');
+          mode = b.getAttribute('data-mode');
+          doCalc();
+        });
+      })(modeBtns[i]);
     }
 
     runBtn.addEventListener('click', doCalc);

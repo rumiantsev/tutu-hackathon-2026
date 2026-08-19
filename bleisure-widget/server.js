@@ -2,9 +2,10 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { computeBleisure } = require('./bleisure.js');
+const { computeBleisure: computeBleisureQuiz } = require('../bleisure-quiz/bleisure.js');
 
 const PORT = Number(process.env.PORT || 8080);
-const ROOT = __dirname;
+const ROOT = path.join(__dirname, '..');
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -20,20 +21,25 @@ function send(res, code, body, type) {
   res.end(body);
 }
 
+function queryOf(url) {
+  return {
+    origin: url.searchParams.get('origin'),
+    destination: url.searchParams.get('destination'),
+    depart: url.searchParams.get('depart'),
+    ret: url.searchParams.get('ret'),
+    adults: url.searchParams.get('adults')
+  };
+}
+
 const server = http.createServer(async function (req, res) {
   const url = new URL(req.url, 'http://localhost');
   const p = decodeURIComponent(url.pathname);
 
-  if (p === '/api/bleisure') {
+  if (p === '/api/bleisure' || p === '/api/bleisure-quiz') {
     try {
-      const data = await computeBleisure({
-        origin: url.searchParams.get('origin'),
-        destination: url.searchParams.get('destination'),
-        depart: url.searchParams.get('depart'),
-        ret: url.searchParams.get('ret'),
-        leisure: url.searchParams.get('leisure'),
-        adults: url.searchParams.get('adults')
-      });
+      const data = p === '/api/bleisure-quiz'
+        ? await computeBleisureQuiz(queryOf(url))
+        : await computeBleisure(queryOf(url));
       send(res, 200, JSON.stringify(data), 'application/json; charset=utf-8');
     } catch (e) {
       send(res, 500, JSON.stringify({ error: 'Внутренняя ошибка: ' + e.message }), 'application/json; charset=utf-8');
@@ -41,7 +47,7 @@ const server = http.createServer(async function (req, res) {
     return;
   }
 
-  let filePath = p === '/' ? '/demo.html' : p;
+  let filePath = p === '/' ? '/bleisure-widget/demo.html' : p;
   const full = path.normalize(path.join(ROOT, filePath));
   if (!full.startsWith(ROOT)) { send(res, 403, 'Forbidden', 'text/plain'); return; }
 
@@ -53,5 +59,5 @@ const server = http.createServer(async function (req, res) {
 });
 
 server.listen(PORT, function () {
-  console.log('Bleisure server (local): http://localhost:' + PORT);
+  console.log('Bleisure server (unified, list + quiz): http://localhost:' + PORT);
 });

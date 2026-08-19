@@ -146,11 +146,12 @@
 .bls-hotel-card {
   border: 1px solid var(--bls-line);
   border-radius: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 0;
   overflow: hidden;
   background: #fff;
 }
 .bls-hotel-card--rec { border-color: var(--bls-company); }
+.bls-compact { display: flex; flex-direction: column; gap: 8px; }
 .bls-hotel-head {
   display: flex;
   align-items: center;
