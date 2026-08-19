@@ -33,8 +33,32 @@
     return out;
   }
 
-  function linkCard(href, inner) {
-    return '<a class="bls-return-card" href="' + esc(href) + '" target="_blank" rel="noopener">' + inner + '</a>';
+  function punchText(delta, cur) {
+    var n = Number(delta);
+    if (n > 0) return 'Продлить возврат до воскресенья — ' + signedMoney(n, cur) + ' за билет.';
+    if (n < 0) return 'Возврат в воскресенье даже дешевле на ' + fmtMoney(-n, cur) + '.';
+    return 'Возврат в воскресенье стоит столько же — продление билета бесплатно.';
+  }
+
+  function renderLeg(parts, leg, cur) {
+    if (!leg || !leg.options || !leg.options.length) return;
+    parts.push('<div class="bls-leg-block">');
+    parts.push('<div class="bls-leg-block-head">' + esc(leg.label) + ' · ' + esc(leg.date) + '</div>');
+    parts.push('<div class="bls-opts">');
+    leg.options.forEach(function (o) {
+      parts.push(
+        '<div class="bls-opt">',
+        '<span class="bls-mode bls-mode--' + esc(o.mode) + '">' + esc(o.modeLabel) + '</span>',
+        '<div class="bls-opt-main">',
+        '<div class="bls-opt-title">' + esc(o.title) + '</div>',
+        '<div class="bls-opt-time">' + esc(o.time) + '</div>',
+        '</div>',
+        '<span class="bls-opt-price">' + fmtMoney(o.price, cur) + '</span>',
+        o.url ? '<a class="bls-btn bls-btn--ghost bls-opt-link" href="' + esc(o.url) + '" target="_blank" rel="noopener">Билет</a>' : '',
+        '</div>'
+      );
+    });
+    parts.push('</div></div>');
   }
 
   function render(root, data) {
@@ -83,61 +107,23 @@
     }
 
     if (tr.delta != null) {
-      parts.push(
-        '<div class="bls-punch">Билет до воскресенья \u2014 всего ' + signedMoney(tr.delta, cur) +
-        '. Главное личное \u2014 отель на выходные.</div>'
-      );
+      parts.push('<div class="bls-punch">' + punchText(tr.delta, cur) + ' Главная личная часть — отель на выходные.</div>');
     }
 
     parts.push('<div class="bls-section">');
-    parts.push('<h4 class="bls-section-title">Транспорт \u00b7 ' + esc(tr.modeLabel || '') + '</h4>');
-    if (tr.note) parts.push('<p class="bls-note">' + esc(tr.note) + '</p>');
-
-    if (tr.business && tr.business.legs && tr.business.legs.length) {
-      parts.push('<div class="bls-legs">');
-      tr.business.legs.forEach(function (leg) {
-        parts.push(
-          '<div class="bls-leg">',
-          '<div class="bls-leg-main">',
-          '<div class="bls-leg-label">' + esc(leg.label) + '</div>',
-          '<div class="bls-leg-time">' + esc(leg.time) + '</div>',
-          '</div>',
-          '<span class="bls-leg-price">' + fmtMoney(leg.price, cur) + '</span>',
-          leg.url ? '<a class="bls-btn bls-btn--ghost" style="width:auto;padding:6px 12px;font-size:12px" href="' + esc(leg.url) + '" target="_blank" rel="noopener">Билет</a>' : '',
-          '</div>'
-        );
-      });
-      parts.push('</div>');
-    }
-
-    if (tr.bleisure && tr.bleisure.returnLeg) {
-      var businessReturn = null;
-      if (tr.business && tr.business.legs && tr.business.legs.length > 1) {
-        businessReturn = tr.business.legs[tr.business.legs.length - 1];
-      }
-      parts.push('<div class="bls-return-compare" style="margin-top:10px">');
-      if (businessReturn) {
-        parts.push(linkCard(businessReturn.url || '#',
-          '<div class="bls-return-tag">Рабочий возврат</div>' +
-          '<div class="bls-return-time">' + esc(businessReturn.time) + '</div>' +
-          '<div class="bls-return-price"><b>' + fmtMoney(businessReturn.price, cur) + '</b></div>'));
-      }
-      var rl = tr.bleisure.returnLeg;
-      parts.push(linkCard(rl.url || '#',
-        '<div class="bls-return-tag">Bleisure возврат</div>' +
-        '<div class="bls-return-time">' + esc(rl.time) + '</div>' +
-        '<div class="bls-return-price"><b>' + fmtMoney(rl.price, cur) + '</b></div>'));
-      if (tr.delta != null) {
-        parts.push('<div class="bls-delta">Разница на возврате: ' + signedMoney(tr.delta, cur) + '</div>');
-      }
-      parts.push('</div>');
+    parts.push('<h4 class="bls-section-title">Транспорт · сравнение всех типов</h4>');
+    renderLeg(parts, tr.outbound, cur);
+    renderLeg(parts, tr.businessReturn, cur);
+    renderLeg(parts, tr.leisureReturn, cur);
+    if (tr.delta != null) {
+      parts.push('<div class="bls-delta">Разница на возврате: ' + signedMoney(tr.delta, cur) + '</div>');
     }
     parts.push('</div>');
 
     parts.push('<div class="bls-section">');
-    parts.push('<h4 class="bls-section-title">Отель на выходные \u00b7 ' + esc(hotel.checkIn) + ' \u2192 ' + esc(hotel.checkOut) +
-      ' \u00b7 ' + esc(hotel.weekendNights) + ' ноч.</h4>');
-    parts.push('<p class="bls-note">Личная часть \u2014 проживание на выходные оплачивает сотрудник.</p>');
+    parts.push('<h4 class="bls-section-title">Отель на выходные · ' + esc(hotel.checkIn) + ' \u2192 ' + esc(hotel.checkOut) +
+      ' · ' + esc(hotel.weekendNights) + ' ноч.</h4>');
+    parts.push('<p class="bls-note">Личная часть — проживание на выходные оплачивает сотрудник.</p>');
 
     if (hotel.recommended) {
       var rec = hotel.recommended;
@@ -148,7 +134,7 @@
         '<span class="bls-hotel-stars">' + stars(rec.stars) + '</span></div>',
         '<span class="bls-hotel-price">' + fmtMoney(rec.price, rec.currency || cur) + '</span>',
         '</div>',
-        '<div class="bls-hotel-meta">\u2605 ' + esc(rec.rating) + ' \u00b7 ' + esc(rec.reviewCount) + ' отзывов</div>',
+        '<div class="bls-hotel-meta">\u2605 ' + esc(rec.rating) + ' · ' + esc(rec.reviewCount) + ' отзывов</div>',
         '<div class="bls-hotel-badges">',
         rec.meal ? '<span class="bls-badge bls-badge--ok">' + esc(rec.meal) + '</span>' : '',
         rec.freeCancellation ? '<span class="bls-badge bls-badge--ok">Бесплатная отмена</span>' : '',
@@ -167,7 +153,7 @@
           '<span class="bls-hotel-stars">' + stars(alt.stars) + '</span></div>',
           '<span class="bls-hotel-price">' + fmtMoney(alt.price, alt.currency || cur) + '</span>',
           '</div>',
-          '<div class="bls-hotel-meta">\u2605 ' + esc(alt.rating) + ' \u00b7 ' + esc(alt.reviewCount) + ' отзывов</div>',
+          '<div class="bls-hotel-meta">\u2605 ' + esc(alt.rating) + ' · ' + esc(alt.reviewCount) + ' отзывов</div>',
           '<div class="bls-hotel-badges">',
           alt.meal ? '<span class="bls-badge bls-badge--ok">' + esc(alt.meal) + '</span>' : '<span class="bls-badge">Без завтрака</span>',
           alt.freeCancellation ? '<span class="bls-badge bls-badge--ok">Бесплатная отмена</span>' : '',
@@ -181,7 +167,7 @@
 
     parts.push(
       '<div class="bls-actions">',
-      '<a class="bls-btn bls-btn--primary" href="' + esc((hotel.recommended && hotel.recommended.url) || '#') + '" target="_blank" rel="noopener">Продлить поездку \u00b7 +' + fmtMoney(split.personalTotal, cur) + '</a>',
+      '<a class="bls-btn bls-btn--primary" href="' + esc((hotel.recommended && hotel.recommended.url) || '#') + '" target="_blank" rel="noopener">Продлить поездку · +' + fmtMoney(split.personalTotal, cur) + '</a>',
       '</div>'
     );
 

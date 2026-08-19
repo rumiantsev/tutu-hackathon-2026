@@ -183,3 +183,46 @@
 
 .bls-footer { font-size: 11px; color: var(--bls-muted); margin-top: 12px; }
 .bls-footer a { color: var(--bls-muted); }
+
+.bls-leg-block { margin-bottom: 12px; }
+.bls-leg-block-head {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--bls-ink);
+  margin: 0 0 6px;
+}
+.bls-opts { display: flex; flex-direction: column; gap: 6px; }
+.bls-opt {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--bls-line);
+  border-radius: 9px;
+  padding: 8px 10px;
+}
+.bls-mode {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+  color: #fff;
+}
+.bls-mode--railway { background: #2f6fed; }
+.bls-mode--etrain { background: #0e9f8a; }
+.bls-mode--bus { background: #f5a623; }
+.bls-mode--avia { background: #8b5cf6; }
+.bls-opt-main { flex: 1; min-width: 0; }
+.bls-opt-title { font-weight: 600; font-size: 13px; }
+.bls-opt-time { font-size: 12px; color: var(--bls-muted); margin-top: 1px; }
+.bls-opt-price { font-weight: 700; white-space: nowrap; }
+.bls-opt-link { width: auto; padding: 5px 11px; font-size: 12px; }
+
+.bls-delta {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--bls-green);
+  padding: 6px;
+  margin-top: 2px;
+}
