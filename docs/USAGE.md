@@ -4,8 +4,8 @@ Bleisure (business + leisure) — когда сотрудник едет в ко
 поездку на выходные. Виджет считает, **сколько платит компания, а сколько — сам
 сотрудник**, и сразу даёт ссылки на покупку билетов и отеля на Tutu.
 
-> Прототип: `https://tutu-hackathon-ott.vercel.app/` · Репозиторий:
-> `https://github.com/rumiantsev/tutu-hackathon-2026`
+> Прототип: [https://tutu-hackathon-ott.vercel.app/](https://tutu-hackathon-ott.vercel.app/) · Репозиторий:
+> [https://github.com/rumiantsev/tutu-hackathon-2026](https://github.com/rumiantsev/tutu-hackathon-2026)
 
 ## Для кого
 

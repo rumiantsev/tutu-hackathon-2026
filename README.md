@@ -5,8 +5,8 @@
 **«компания vs сотрудник»** на живых данных поиска Tutu — сравнивая все типы
 транспорта (самолёт / поезд / автобус) и подбирая отель на выходные.
 
-> 🔗 **Прототип**: `https://tutu-hackathon-ott.vercel.app/`
-> 🔗 **Репозиторий**: `https://github.com/rumiantsev/tutu-hackathon-2026`
+> 🔗 **Прототип**: [https://tutu-hackathon-ott.vercel.app/](https://tutu-hackathon-ott.vercel.app/)
+> 🔗 **Репозиторий**: [https://github.com/rumiantsev/tutu-hackathon-2026](https://github.com/rumiantsev/tutu-hackathon-2026)
 
 ## Что делает
 
