@@ -48,7 +48,11 @@
       "rating": 7.89,
       "reviewCount": 57,
       "meal": "Завтрак включён",
+      "mealType": "breakfast",
       "freeCancellation": true,
+      "features": [
+        "cancel"
+      ],
       "price": 7800,
       "currency": "RUB",
       "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=9051907&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
@@ -58,20 +62,46 @@
         "https://cdn.worldota.net/t/x500/extranet/c0/cd/c0cd911330bc037d03607c02d97f0d6eefa48220.jpeg",
         "https://cdn.worldota.net/t/x500/extranet/22/7f/227f98896060401cbc98dad69b677e495ceb6d94.jpeg",
         "https://cdn.worldota.net/t/x500/extranet/e5/78/e5786bbb885e57780fb65d435bdf834b42a5de32.jpeg",
-        "https://cdn.worldota.net/t/x500/extranet/a5/89/a58950b51a9b95f8a01abc668f6ddb8d88dc7dad.jpeg",
-        "https://cdn.worldota.net/t/x500/extranet/a6/19/a619a8094ce3007fb57857c08f19251ad31ddfeb.jpeg",
-        "https://cdn.worldota.net/t/x500/extranet/55/8b/558babb6d22411865b709761ecf71fee7fcf519b.jpeg"
+        "https://cdn.worldota.net/t/x500/extranet/a5/89/a58950b51a9b95f8a01abc668f6ddb8d88dc7dad.jpeg"
       ],
       "photosTotal": 80
     },
     "alternatives": [
+      {
+        "name": "Номера в Твери",
+        "stars": 2,
+        "rating": 9.04,
+        "reviewCount": 122,
+        "meal": null,
+        "mealType": "nomeal",
+        "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
+        "price": 5398,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=8376255&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/4a60f1a7145eb0ea3882b70ab0fe071b5fccf2a8.e452ddfe9f9eccdc50a5f172afb1cf40de529218.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/28b73adc8c4acad7df5c22ae860a451130c073c4.74bb5e97094d5a28785863db71d795db27f53831.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/6d373ad8a725ff7e8c28e8d99ac82d9624eafd70.00bc674e1ddd5cf6d68b7a8e9ac11b3402e50f97.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/f0112f48ec89b87bf4c9937b23f8ca21bd7f97fe.3b97ac542846b82a51d6cedec973a4a10fca94ca.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/5ee7ebf392c34bdf2a016c019aabe718b95b38d8.40ea27c2bce74925cf3edca64f9101ae665e80d2.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/9cf975ad0fc45213449d79ff398eadd6f71403cd.b5209f912c16044dc467b13a0a520c87098cced7.jpeg"
+        ],
+        "photosTotal": 29
+      },
       {
         "name": "Отель Lemon Loft Hotel",
         "stars": 3,
         "rating": 7.44,
         "reviewCount": 144,
         "meal": null,
+        "mealType": "nomeal",
         "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
         "price": 5627,
         "currency": "RUB",
         "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=7653247&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
@@ -81,11 +111,57 @@
           "https://cdn2.tu-tu.ru/imghub/view/bf700808-d1c6-4eee-946f-bb5b8f62b7cb/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/fa184f357ea2ef62e7681d4ebced15fc.jpg",
           "https://cdn2.tu-tu.ru/imghub/view/0704afa2-ec83-4ade-a4dc-d2e591b4023e/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/dadafcb0ce591d000f240b49e01b5195.jpg",
           "https://cdn2.tu-tu.ru/imghub/view/d98be6b6-88ea-4bb4-bb9a-e92917707540/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/21a55003b2ffba4eb7e76734e12a690d.jpg",
-          "https://cdn2.tu-tu.ru/imghub/view/963a4476-4972-4532-b863-167017434b89/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/a41375ce1c888d38fa6aa0d6f6cf58dc.jpg",
-          "https://cdn2.tu-tu.ru/imghub/view/46129cf1-b915-4e88-b512-981629ddcfc4/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/828748417fa2245355d7c346fdadc7a2.jpg",
-          "https://cdn2.tu-tu.ru/imghub/view/8c7c7844-e4f6-4de7-836e-c974cf9e4721/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/fd2c84d2899076e9a17e445e3c94fea2.jpg"
+          "https://cdn2.tu-tu.ru/imghub/view/963a4476-4972-4532-b863-167017434b89/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/a41375ce1c888d38fa6aa0d6f6cf58dc.jpg"
         ],
         "photosTotal": 100
+      },
+      {
+        "name": "Гостевой Дом Исаевский",
+        "stars": 0,
+        "rating": 8.49,
+        "reviewCount": 218,
+        "meal": null,
+        "mealType": "nomeal",
+        "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
+        "price": 5811,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=7795253&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn.bronevik.com/static/photo/g/500x500/c47c18d3ec9b0ce3690e6f67ad0abcad",
+          "https://cdn.bronevik.com/static/photo/g/500x500/d09c532c1856f38abffa5ae06f718d97",
+          "https://cdn.bronevik.com/static/photo/g/500x500/7e6eb79187c9adf9fc06000b790c41f9",
+          "https://cdn.bronevik.com/static/photo/g/500x500/a1a9745e88b949099996163bf55cdbc1",
+          "https://cdn.bronevik.com/static/photo/g/500x500/6159bf5fc3b58337a0c21928d51a7424",
+          "https://cdn.bronevik.com/static/photo/g/500x500/a976242dfedf0ad5b4f56db2059b04a5"
+        ],
+        "photosTotal": 100
+      },
+      {
+        "name": "Отель Орион",
+        "stars": 3,
+        "rating": 8.34,
+        "reviewCount": 104,
+        "meal": null,
+        "mealType": "nomeal",
+        "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
+        "price": 5952,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=9687025&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn.bronevik.com/static/photo/g/500x500/e6a2abb714d3ffb838e18b62e0196945",
+          "https://cdn.bronevik.com/static/photo/g/500x500/d5b1863338c64e4b000236fffaaaf24d",
+          "https://cdn.bronevik.com/static/photo/g/500x500/92c2990e0aa56cdc8c4cf580a3a46409",
+          "https://cdn.bronevik.com/static/photo/g/500x500/f6bf5bca23f49ad8ba1e4ea20f8ae261",
+          "https://cdn.bronevik.com/static/photo/g/500x500/3d88f06488a07f87f14b3eedd4564a06",
+          "https://cdn.bronevik.com/static/photo/g/500x500/0c21a1ecbbe636bee34a6df738105abd"
+        ],
+        "photosTotal": 97
       },
       {
         "name": "Отель Морозовский",
@@ -93,7 +169,11 @@
         "rating": 9.23,
         "reviewCount": 12,
         "meal": null,
+        "mealType": "nomeal",
         "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
         "price": 8000,
         "currency": "RUB",
         "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=10447517&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
@@ -103,13 +183,224 @@
           "https://cdn.worldota.net/t/x500/extranet/4e/d5/4ed5fc2560540a0d8ca3f85f18ea13636f9961db.JPEG",
           "https://cdn.worldota.net/t/x500/extranet/4b/c9/4bc91806b44d452b7d88dae77a7598eba1646de0.JPEG",
           "https://cdn.worldota.net/t/x500/extranet/ff/11/ff1141192c63490e6c858d75624c93c02b33c716.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/30/a4/30a4830789f23788de0e96c6a2c04ed1fec3b809.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/ac/6b/ac6b4623f437b4a9c7cf2c505c2e238ab94d0788.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/5e/61/5e6133c7ba91accbbfe1b4ef9d07cdf8f61c41d6.JPEG"
+          "https://cdn.worldota.net/t/x500/extranet/30/a4/30a4830789f23788de0e96c6a2c04ed1fec3b809.JPEG"
         ],
         "photosTotal": 23
+      },
+      {
+        "name": "Отель Премьер",
+        "stars": 3,
+        "rating": 9.47,
+        "reviewCount": 374,
+        "meal": "Завтрак \"шведский стол\"",
+        "mealType": "breakfast",
+        "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
+        "price": 8715,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=11450276&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn2.tu-tu.ru/imghub/view/c52c4de8-6cf9-4977-a286-e34bff04a093/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/5a55a58fe0022e81fb15a7324290c32d.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/71babe98-4bd8-4b18-9e53-e8987e45bd5c/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/39ef8ce0bd244a0fae62246d5a30c1eb.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/43815c9e-bdef-460c-9ae5-f31fed51acd2/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/0b2a9383311cf81da49d0d571b82fa19.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/8c3ee3e2-9249-471a-8ef7-677a5b832196/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/ee662b4c5205a349dcdeb75a6e8a47b2.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/91bfad0d-7673-46dd-9f62-8e7ad3830046/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/2993f21a67cb0455a70febfa833d4fc3.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/66559f84-c681-41c8-9b44-4d66b9a7d3c1/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/26cbe1cb14cac10a0616decbe5d486f5.jpg"
+        ],
+        "photosTotal": 9
+      },
+      {
+        "name": "Однокомнатная квартира на улице: Театральный проезд, 3Б",
+        "stars": 0,
+        "rating": 9.76,
+        "reviewCount": 8,
+        "meal": null,
+        "mealType": "nomeal",
+        "freeCancellation": false,
+        "features": [],
+        "price": 9440,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=7718890&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn.worldota.net/t/x500/extranet/3f/6a/3f6a755567efa826b451df65376b24efb6c4dc92.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/c3/7b/c37ba03f2eab0ceefcf2d9deb07b18799d864313.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/5f/48/5f48dccae80b8daf92e3be151eb23fc0f4b96ed0.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/59/e6/59e665c43fc9f12466b7a4254f3ddc665018e0b3.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/7e/93/7e93c069a7db9bfdcf4802e7d4cd3923597f47e8.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/96/5d/965daab6882585901faa3542cb637cfaa5858b5d.JPEG"
+        ],
+        "photosTotal": 29
+      },
+      {
+        "name": "2-х комнатная квартира на улице: Новоторжская, д.19",
+        "stars": 0,
+        "rating": 9.09,
+        "reviewCount": 13,
+        "meal": null,
+        "mealType": "nomeal",
+        "freeCancellation": false,
+        "features": [],
+        "price": 10620,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=8066556&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn.worldota.net/t/x500/extranet/8a/39/8a392ccea41f7e1444e939d83f0c419a20c282a6.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/7f/42/7f4227bd27df85386292c33f491dbe3df4a075e0.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/a7/9b/a79b4a3150619973396b27e02fca854293aea40f.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/cf/fd/cffd7253af106686525919592e539634ceb02daa.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/76/88/768842fd1635de701dc47c884a3f7ff223b1873f.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/33/08/3308d4ca6a603ce580d4539ef0f2bc26650e19eb.JPEG"
+        ],
+        "photosTotal": 29
+      },
+      {
+        "name": "Губернаторъ",
+        "stars": 3,
+        "rating": 9.18,
+        "reviewCount": 340,
+        "meal": "Завтрак включён",
+        "mealType": "breakfast",
+        "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
+        "price": 11800,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=7646220&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn2.tu-tu.ru/imghub/view/2016c42a-545d-4721-8f52-a2ceba19e1b5/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/a482537381a2a8de7786224dc9e19bb6.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/25945622-5e7a-4414-bba7-ac0abc40bbbf/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/1492bf23eef09934d4e79ec19117bba1.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/b3575f7b-6ec5-48ff-b1d9-9a6bb4dedec9/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/2e5615360c3143004e58bf0761fc50e4.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/9dbf3ad7-ee98-47db-9ca1-15f9b89470c6/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/2b0eebae40e1dba9b761f03617a872d7.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/42d5135e-7e68-4f5f-a4ea-142aeb2c47ed/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/a82b15b24d97f480b8b9cca1b9da2e6a.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/55887a4e-3efb-48ee-acd6-8a3a4ec34807/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/946eeecb205bd593ba666839b11c7c74.jpg"
+        ],
+        "photosTotal": 100
+      },
+      {
+        "name": "Отель Тверские Замки De Luxe",
+        "stars": 4,
+        "rating": 9.02,
+        "reviewCount": 29,
+        "meal": null,
+        "mealType": "nomeal",
+        "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
+        "price": 12000,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=11733801&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/ae24d74524935228599579a5af8e877a62be011f.7655d47b65c405524f44354077ec5c3179eb957d.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/848caf08e3512d47fddc3d7306baf83427029015.73a6a62cf262d34068236ec82c24b5ca919826cc.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/975eb56abd8ce79ecece44e9432caae4532a61d4.a7f137bdb35d0ad13e0510c5043c468a5f68bd98.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/252128fa5c5e98f18e1cf5a2be569c097887b4ec.c0604b2a0f6983590b5f12814f60e6528f6a3aa7.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/bb09b0559f1bc7bf81ce2c44dfb781cb065577bb.42dd50df2e6bde164ff440247657954686159a7d.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/f103dc3a36467f91ab5c0d76b435e2bf302199e5.673f03bc88d92f8d7c8a8ab889575705d3221b0d.jpeg"
+        ],
+        "photosTotal": 11
+      },
+      {
+        "name": "Отель Луидор",
+        "stars": 3,
+        "rating": 9.25,
+        "reviewCount": 123,
+        "meal": null,
+        "mealType": "nomeal",
+        "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
+        "price": 12780,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=11452521&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/3d650ff0b97cec71057cb06a6a909b1bb9a94e9c.567fd4d60cb0e44a83ac6c1d81ea0f13b3996d98.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/0074dc4e90b7a414041c8c4bb6a4697b6d94824d.5cf43047835d7f64392d61fbef63ff32a0d4cacb.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/703983a8e1b125f3858a0c6a4740b5ce25aa29c0.caa37b1aa0dd3a1de59962cb53f7a87727ba32f4.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/4d49e9d9e0835bf519e246d49215e4f807f42366.c832aa5988585cc72fca7ed0fdd61546eccf0635.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/7e85031a8a7805f3cc187f0225d51452556ed323.c217a9ed83a298600d21926517df39c2d4e5d50d.jpeg",
+          "https://cdn4.tu-tu.ru/static/hotels-photo/hotels-photo/a0f85f684818df7da74c56e382ff4b9fb37d71e3.ba37c7bb64a645df9a96c9a4dee4d8d799256c5f.jpeg"
+        ],
+        "photosTotal": 53
+      },
+      {
+        "name": "Росси",
+        "stars": 3,
+        "rating": 8.98,
+        "reviewCount": 107,
+        "meal": "Завтрак \"шведский стол\"",
+        "mealType": "breakfast",
+        "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
+        "price": 13500,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=10239224&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn.worldota.net/t/x500/extranet/21/37/21372a18651965f4fdbb51a33e1d1f6d072773c3.jpeg",
+          "https://cdn.worldota.net/t/x500/extranet/54/ee/54ee675702076b331fbecc2582a9ab12de3c25e4.jpeg",
+          "https://cdn.worldota.net/t/x500/extranet/e9/34/e934a3a3771980722b05321075d4c5b1704208de.jpeg",
+          "https://cdn.worldota.net/t/x500/extranet/c7/a0/c7a052b4ee3fcd3f748481856ddae8e86f1687a6.jpeg",
+          "https://cdn.worldota.net/t/x500/extranet/c4/24/c4247db7f16eff39b91a1d6e5c64f029bf30f221.jpeg",
+          "https://cdn.worldota.net/t/x500/extranet/5d/4a/5d4a5ee3f2f181137d85e8f8e51e085e90490d44.jpeg"
+        ],
+        "photosTotal": 100
+      },
+      {
+        "name": "Отель Панорама",
+        "stars": 4,
+        "rating": 8,
+        "reviewCount": 219,
+        "meal": "Завтрак \"шведский стол\"",
+        "mealType": "breakfast",
+        "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
+        "price": 27912,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=11858553&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn.ostrovok.ru/t/x500/extranet/52/9d/529da286f424038d244a60de6d425ba690395274.JPEG",
+          "https://cdn.ostrovok.ru/t/x500/extranet/a8/fb/a8fb75ad843ab39590ea3e3c9daf3011fd4f9ee2.JPEG",
+          "https://cdn.ostrovok.ru/t/x500/extranet/34/0f/340f7181c402da2299ddb7f29137b6fb16cc164a.JPEG",
+          "https://cdn.ostrovok.ru/t/x500/extranet/zz/b7/adb7807c89311a2ace0ed8d2fe870a2c0e4dced5.JPEG",
+          "https://cdn.ostrovok.ru/t/x500/extranet/cf/eb/cfeb618f7c89298b5edef15386a0302f1f9c436b.jpeg",
+          "https://cdn.ostrovok.ru/t/x500/extranet/03/9d/039da1afdfc6f5b14c206b82952d51f47c36d890.jpeg"
+        ],
+        "photosTotal": 50
+      },
+      {
+        "name": "Отель \"Пушкин\"",
+        "stars": 4,
+        "rating": 9.24,
+        "reviewCount": 116,
+        "meal": "Завтрак включён",
+        "mealType": "breakfast",
+        "freeCancellation": true,
+        "features": [
+          "cancel"
+        ],
+        "price": 30000,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=11453092&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn2.tu-tu.ru/imghub/view/4872e924-46df-4c76-94ad-08c9e64f14ca/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/3fa41487f0e480a24e170e9e9ecfba85.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/9d5d5808-a72d-413c-a444-fb41e3aab4cd/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/e27709232cd953e086cdc3be74d807dd.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/dc32bb0e-2053-4aa7-bdc3-facf673deb90/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/89adf25498ec7353c031fe50e59cd63a.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/f20839fa-00cc-4af8-a64a-5812de1cadbc/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/f9e3f7f7fdede2f47adb4774e75db52b.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/95ebec1b-2f82-48af-b0b8-f9d0f7c04a27/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/4c93947f6d7e18ede61b562a7ed97ae3.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/9405069e-57ae-422e-82c4-b977f2e77dcf/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/8a3283400c2471bab5ffad206ea64ee0.jpg"
+        ],
+        "photosTotal": 30
       }
-    ]
+    ],
+    "hasMore": true
   },
   "split": {
     "company": 962.71,

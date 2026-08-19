@@ -124,20 +124,41 @@ function pickRecommended(hotels) {
   return rec;
 }
 
+function hotelFeatures(h) {
+  const bo = h.best_offer || {};
+  const feats = [];
+  if (bo.free_cancellation) feats.push('cancel');
+  if (bo.pay_at_hotel) feats.push('pay_hotel');
+  if (bo.pay_online) feats.push('pay_online');
+  return feats;
+}
+
+function mealTypeOf(h) {
+  const bo = h.best_offer || {};
+  if (bo.breakfast_included) return 'breakfast';
+  const name = (bo.meal_name || '').toLowerCase();
+  if (/вс[ёе] включено|all.?inclusive/i.test(name)) return 'allinclusive';
+  if (name) return 'other';
+  return 'nomeal';
+}
+
 function hotelCard(h) {
   const bo = h.best_offer || {};
+  const photos = (h.photos || []).slice(0, 6);
   return {
     name: h.name,
     stars: h.stars || 0,
     rating: (h.review_summary && h.review_summary.rating) || null,
     reviewCount: (h.review_summary && h.review_summary.review_count) || 0,
     meal: bo.meal_name || null,
+    mealType: mealTypeOf(h),
     freeCancellation: !!bo.free_cancellation,
+    features: hotelFeatures(h),
     price: bo.price ? bo.price.amount : null,
     currency: bo.price ? bo.price.currency : 'RUB',
     url: bo.checkout_url || null,
-    photos: h.photos || [],
-    photosTotal: h.photos_total || (h.photos ? h.photos.length : 0)
+    photos: photos,
+    photosTotal: h.photos_total || photos.length
   };
 }
 
@@ -191,7 +212,7 @@ async function computeBleisure(q) {
   const delta = round2(leisureLeg.options[0].price - businessLeg.options[0].price);
 
   const hotelsRes = await callTool('search_hotels', {
-    city_name: destination, check_in: hotelIn, check_out: hotelOut, adults: adults, page_size: 8, view: 'full'
+    city_name: destination, check_in: hotelIn, check_out: hotelOut, adults: adults, page_size: 15, view: 'full'
   });
   const hotels = (hotelsRes.hotels || []).filter(function (h) {
     return h.best_offer && h.best_offer.price && h.best_offer.price.amount != null;
@@ -202,8 +223,7 @@ async function computeBleisure(q) {
   if (hotels.length) {
     const rec = pickRecommended(hotels);
     recommended = hotelCard(rec);
-    const rest = hotels.filter(function (h) { return h.hotel_id !== rec.hotel_id; }).sort(byPrice);
-    alternatives = rest.slice(0, 2).map(function (h) { return hotelCard(h); });
+    alternatives = hotels.filter(function (h) { return h.hotel_id !== rec.hotel_id; }).sort(byPrice).map(function (h) { return hotelCard(h); });
   }
 
   const personalHotel = recommended ? recommended.price : 0;
@@ -228,7 +248,8 @@ async function computeBleisure(q) {
       checkIn: fmtDate(hotelIn),
       checkOut: fmtDate(hotelOut),
       recommended: recommended,
-      alternatives: alternatives
+      alternatives: alternatives,
+      hasMore: !!(hotelsRes.meta && hotelsRes.meta.has_more)
     },
     split: {
       company: businessLeg.options[0].price,

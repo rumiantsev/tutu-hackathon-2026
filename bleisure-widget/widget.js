@@ -95,7 +95,8 @@
     if (h.freeCancellation) b.push('<span class="bls-badge bls-badge--ok">Бесплатная отмена</span>');
     var badges = b.length ? '<div class="bls-hotel-badges">' + b.join('') + '</div>' : '';
 
-    return '<div class="bls-hotel-card' + (isRec ? ' bls-hotel-card--rec' : '') + (expanded ? ' is-expanded' : '') + '">' +
+    return '<div class="bls-hotel-card' + (isRec ? ' bls-hotel-card--rec' : '') + (expanded ? ' is-expanded' : '') + '"' +
+      ' data-stars="' + (h.stars || 0) + '" data-meal="' + esc(h.mealType || '') + '" data-features="' + esc((h.features || []).join(' ')) + '">' +
       '<div class="bls-hotel-head">' +
       thumb +
       '<div class="bls-hotel-main">' +
@@ -117,6 +118,49 @@
       '<div style="margin-top:8px"><a class="bls-btn ' + (isRec ? 'bls-btn--primary' : 'bls-btn--ghost') + '" href="' + esc(h.url) + '" target="_blank" rel="noopener">Выбрать номер</a></div>' +
       '</div>' +
       '</div>';
+  }
+
+  function filtersHtml(hotels) {
+    var starsSet = {};
+    var mealSet = {};
+    var featSet = {};
+    hotels.forEach(function (h) {
+      if (h.stars) starsSet[h.stars] = true;
+      if (h.mealType) mealSet[h.mealType] = true;
+      (h.features || []).forEach(function (f) { featSet[f] = true; });
+    });
+    var stars = Object.keys(starsSet).map(Number).sort(function (a, b) { return a - b; });
+    var meals = Object.keys(mealSet);
+    var feats = Object.keys(featSet);
+    var MEAL_LABEL = { breakfast: 'Завтрак', nomeal: 'Без питания', allinclusive: 'Всё включено', other: 'Другое' };
+    var FEAT_LABEL = { cancel: 'Бесплатная отмена', pay_hotel: 'Оплата на месте', pay_online: 'Оплата онлайн' };
+
+    if (!stars.length && !meals.length && !feats.length) return '';
+
+    var html = '<div class="bls-filters">';
+    if (stars.length) {
+      html += '<div class="bls-filter-group"><span class="bls-filter-label">Звёзды</span>';
+      stars.forEach(function (s) {
+        html += '<button type="button" class="bls-chip" data-group="stars" data-value="' + s + '">' + s + '\u2605</button>';
+      });
+      html += '</div>';
+    }
+    if (meals.length) {
+      html += '<div class="bls-filter-group"><span class="bls-filter-label">Питание</span>';
+      meals.forEach(function (m) {
+        html += '<button type="button" class="bls-chip" data-group="meal" data-value="' + esc(m) + '">' + esc(MEAL_LABEL[m] || m) + '</button>';
+      });
+      html += '</div>';
+    }
+    if (feats.length) {
+      html += '<div class="bls-filter-group"><span class="bls-filter-label">Фишки</span>';
+      feats.forEach(function (f) {
+        html += '<button type="button" class="bls-chip" data-group="features" data-value="' + esc(f) + '">' + esc(FEAT_LABEL[f] || f) + '</button>';
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+    return html;
   }
 
   function render(root, data) {
@@ -184,14 +228,24 @@
       ' · ' + esc(hotel.weekendNights) + ' ноч.</h4>');
     parts.push('<p class="bls-note">Личная часть \u2014 проживание на выходные оплачивает сотрудник.</p>');
 
+    var allHotels = [];
     if (hotel.recommended) {
+      allHotels.push(hotel.recommended);
       parts.push(hotelCardHtml(hotel.recommended, cur, true, true));
     }
 
-    if (hotel.alternatives && hotel.alternatives.length) {
-      hotel.alternatives.forEach(function (alt) {
-        parts.push(hotelCardHtml(alt, cur, false, false));
-      });
+    var alts = hotel.alternatives || [];
+    var visibleAlts = alts.slice(0, 2);
+    var hiddenAlts = alts.slice(2);
+    visibleAlts.forEach(function (alt) { parts.push(hotelCardHtml(alt, cur, false, false)); });
+    alts.forEach(function (alt) { allHotels.push(alt); });
+
+    if (hiddenAlts.length) {
+      parts.push('<button type="button" class="bls-btn bls-btn--ghost bls-more-btn">Посмотреть другие отели (' + hiddenAlts.length + ')</button>');
+      parts.push('<div class="bls-more">');
+      parts.push(filtersHtml(allHotels));
+      hiddenAlts.forEach(function (alt) { parts.push(hotelCardHtml(alt, cur, false, false)); });
+      parts.push('</div>');
     }
     parts.push('</div>');
 
@@ -207,6 +261,7 @@
     root.innerHTML = '<div class="bls-widget">' + parts.join('') + '</div>';
     attachGalleries(root);
     attachHotels(root);
+    attachHotelControls(root);
   }
 
   function attachGalleries(root) {
@@ -248,6 +303,51 @@
           if (!wasExpanded) card.classList.add('is-expanded');
         });
       })(cards[i]);
+    }
+  }
+
+  function applyFilters(root) {
+    var active = { stars: {}, meal: {}, features: {} };
+    var chips = root.querySelectorAll('.bls-chip.is-active');
+    for (var i = 0; i < chips.length; i++) {
+      var c = chips[i];
+      var g = c.getAttribute('data-group');
+      var v = c.getAttribute('data-value');
+      if (active[g]) active[g][v] = true;
+    }
+    var cards = root.querySelectorAll('.bls-hotel-card');
+    for (var j = 0; j < cards.length; j++) {
+      var card = cards[j];
+      var show = true;
+      if (Object.keys(active.stars).length && !active.stars[card.getAttribute('data-stars')]) show = false;
+      if (show && Object.keys(active.meal).length && !active.meal[card.getAttribute('data-meal')]) show = false;
+      if (show && Object.keys(active.features).length) {
+        var feats = (card.getAttribute('data-features') || '').split(' ');
+        var ok = false;
+        for (var k = 0; k < feats.length; k++) { if (active.features[feats[k]]) { ok = true; break; } }
+        if (!ok) show = false;
+      }
+      card.style.display = show ? '' : 'none';
+    }
+  }
+
+  function attachHotelControls(root) {
+    var more = root.querySelector('.bls-more');
+    var btn = root.querySelector('.bls-more-btn');
+    if (btn && more) {
+      btn.addEventListener('click', function () {
+        more.classList.add('is-open');
+        btn.style.display = 'none';
+      });
+    }
+    var chips = root.querySelectorAll('.bls-chip');
+    for (var i = 0; i < chips.length; i++) {
+      (function (chip) {
+        chip.addEventListener('click', function () {
+          chip.classList.toggle('is-active');
+          applyFilters(root);
+        });
+      })(chips[i]);
     }
   }
 
