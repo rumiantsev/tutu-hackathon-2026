@@ -11,6 +11,21 @@ const MODES = [
   { key: 'avia', label: 'Самолёт', tool: 'search_avia', args: function (a) { return { adults: a }; } }
 ];
 
+const DESTINATION_GUIDE = {
+  'тверь': {
+    note: 'Город на Волге: купеческая архитектура, прогулки по набережной.',
+    points: ['Набережная Афанасия Никитина', 'Морозовский городок', 'Рестораны на Трёхсвятской']
+  },
+  'москва': {
+    note: 'Парки, набережные и музеи — выходных хватит впритык.',
+    points: ['Зарядье и парки', 'Набережная Москвы-реки', 'Рестораны и бары']
+  },
+  'санкт-петербург': {
+    note: 'Эрмитаж, каналы и разводные мосты.',
+    points: ['Дворцовая и Невский', 'Каналы и прогулки на катере', 'Музеи и галереи']
+  }
+};
+
 function round2(n) { return Math.round((Number(n) || 0) * 100) / 100; }
 
 function toIso(dt) {
@@ -226,8 +241,36 @@ async function computeBleisure(q) {
     alternatives = hotels.filter(function (h) { return h.hotel_id !== rec.hotel_id; }).sort(byPrice).map(function (h) { return hotelCard(h); });
   }
 
-  const personalHotel = recommended ? recommended.price : 0;
-  const personalTotal = round2(delta + personalHotel);
+  const cheapestHotel = hotels.length
+    ? Math.min.apply(null, hotels.map(function (h) { return h.best_offer.price.amount; }))
+    : 0;
+
+  let spaRes = null;
+  try {
+    spaRes = await callTool('search_hotels', {
+      city_name: destination, check_in: hotelIn, check_out: hotelOut, adults: adults, page_size: 10, view: 'full', hotel_amenities: ['spa', 'sauna', 'jacuzzi']
+    });
+  } catch (e) {
+    spaRes = null;
+  }
+  const spaHotels = ((spaRes && spaRes.hotels) || []).filter(function (h) {
+    return h.best_offer && h.best_offer.price && h.best_offer.price.amount != null;
+  }).sort(byPrice);
+  const spaHotel = spaHotels.length ? {
+    name: spaHotels[0].name,
+    price: spaHotels[0].best_offer.price.amount,
+    url: spaHotels[0].best_offer.checkout_url || null
+  } : null;
+
+  const resolvedName = (hotelsRes.meta && hotelsRes.meta.resolved_geo && hotelsRes.meta.resolved_geo.name) || destination;
+  const guide = DESTINATION_GUIDE[resolvedName.toLowerCase()] || null;
+
+  const baseTransport = businessLeg.options[0].price;
+  const companySavings = round2(Math.max(0, -delta));
+  const employeeTransport = round2(Math.max(0, delta));
+  const employeeHotel = cheapestHotel;
+  const employeePays = round2(employeeTransport + employeeHotel);
+  const companyPays = round2(baseTransport - companySavings);
 
   return {
     trip: {
@@ -243,6 +286,13 @@ async function computeBleisure(q) {
       leisureLeg: leisureLeg,
       delta: delta
     },
+    destination: {
+      weekendDays: dayDiff(hotelIn, hotelOut),
+      city: resolvedName,
+      note: guide ? guide.note : null,
+      points: guide ? guide.points : [],
+      spa: spaHotel
+    },
     hotel: {
       weekendNights: dayDiff(hotelIn, hotelOut),
       checkIn: fmtDate(hotelIn),
@@ -251,11 +301,14 @@ async function computeBleisure(q) {
       alternatives: alternatives,
       hasMore: !!(hotelsRes.meta && hotelsRes.meta.has_more)
     },
+    baseline: { companyTransport: baseTransport },
+    bleisure: { transport: leisureLeg.options[0].price, hotel: employeeHotel },
     split: {
-      company: businessLeg.options[0].price,
-      personalTransport: delta,
-      personalHotel: personalHotel,
-      personalTotal: personalTotal,
+      companyPays: companyPays,
+      employeeTransport: employeeTransport,
+      employeeHotel: employeeHotel,
+      employeePays: employeePays,
+      companySavings: companySavings,
       currency: 'RUB'
     },
     disclaimer: 'Цены актуальны на момент поиска и могут измениться в корзине. Оплата проходит на Tutu.'

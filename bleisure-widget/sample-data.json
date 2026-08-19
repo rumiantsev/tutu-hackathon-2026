@@ -38,6 +38,21 @@
     },
     "delta": 61.7
   },
+  "destination": {
+    "weekendDays": 2,
+    "city": "Тверь",
+    "note": "Город на Волге: купеческая архитектура, прогулки по набережной.",
+    "points": [
+      "Набережная Афанасия Никитина",
+      "Морозовский городок",
+      "Рестораны на Трёхсвятской"
+    ],
+    "spa": {
+      "name": "Отель Lemon Loft Hotel",
+      "price": 5627,
+      "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=7653247&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d"
+    }
+  },
   "hotel": {
     "weekendNights": 2,
     "checkIn": "28 авг · пт",
@@ -164,28 +179,50 @@
         "photosTotal": 97
       },
       {
-        "name": "Отель Морозовский",
+        "name": "Отель Ситара",
         "stars": 0,
-        "rating": 9.23,
-        "reviewCount": 12,
+        "rating": 7.72,
+        "reviewCount": 36,
+        "meal": null,
+        "mealType": "nomeal",
+        "freeCancellation": false,
+        "features": [],
+        "price": 6995,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=5268391&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn.bronevik.com/static/photo/g/500x500/ad9cd5eee3b48dbaf4e342575c763eac",
+          "https://cdn.bronevik.com/static/photo/g/500x500/0e2762d7691b3a1fa898c0439e350ae5",
+          "https://cdn.ostrovok.ru/t/x500/extranet/b0/27/b027795ecb12bd19ca563315f2d022f4c30cdc1a.jpeg",
+          "https://cdn.ostrovok.ru/t/x500/extranet/46/69/4669f93570d2515a159fa6d95846ccd9e0f870eb.jpeg",
+          "https://cdn.ostrovok.ru/t/x500/extranet/99/86/9986a111a0cba1a83d65a92e97a604975425562d.jpeg",
+          "https://cdn.ostrovok.ru/t/x500/extranet/f4/e6/f4e6f6ac8e0076e5033fa5d3827fa2a08a5e83fa.jpeg"
+        ],
+        "photosTotal": 49
+      },
+      {
+        "name": "Мини-Отель Тверь-Центр",
+        "stars": 2,
+        "rating": 8.84,
+        "reviewCount": 312,
         "meal": null,
         "mealType": "nomeal",
         "freeCancellation": true,
         "features": [
           "cancel"
         ],
-        "price": 8000,
+        "price": 7605,
         "currency": "RUB",
-        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=10447517&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=6543175&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
         "photos": [
-          "https://cdn.worldota.net/t/x500/extranet/13/6b/136bf6676548399a192a52327b4a28c27858ca77.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/6d/2c/6d2c4f5059db2a56eda77e9de4614b4eb2b94ffb.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/4e/d5/4ed5fc2560540a0d8ca3f85f18ea13636f9961db.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/4b/c9/4bc91806b44d452b7d88dae77a7598eba1646de0.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/ff/11/ff1141192c63490e6c858d75624c93c02b33c716.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/30/a4/30a4830789f23788de0e96c6a2c04ed1fec3b809.JPEG"
+          "https://cdn2.tu-tu.ru/imghub/view/3c2d95e7-f1c5-4455-9cc7-d4d4ab0d2ec7/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/81f89f4cbf9a332904e52abd63478e17.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/5488780b-d644-4e8a-aa36-465d842a3ef6/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/dba17e114f9f98bc21529c83e53f9a71.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/2d396eee-039b-40cc-9388-1074a855019e/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/57460842bdf713c76a6ef11f99d922dd.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/3fee305c-a34f-4e90-ba3e-c58ec8fe3540/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/3694a7c00831b1803a041fc7d2e23ee7.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/1069ed6c-a358-4ae4-92d0-cf09a642d35c/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/5730f8e96c9b1c7460ad6422413af731.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/aa5e9316-35cd-4df7-8831-c31dc7f2308a/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/8351be7efd3a525822fb4e62bcc0d5e0.jpg"
         ],
-        "photosTotal": 23
+        "photosTotal": 50
       },
       {
         "name": "Отель Премьер",
@@ -210,28 +247,6 @@
           "https://cdn2.tu-tu.ru/imghub/view/66559f84-c681-41c8-9b44-4d66b9a7d3c1/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/26cbe1cb14cac10a0616decbe5d486f5.jpg"
         ],
         "photosTotal": 9
-      },
-      {
-        "name": "Однокомнатная квартира на улице: Театральный проезд, 3Б",
-        "stars": 0,
-        "rating": 9.76,
-        "reviewCount": 8,
-        "meal": null,
-        "mealType": "nomeal",
-        "freeCancellation": false,
-        "features": [],
-        "price": 9440,
-        "currency": "RUB",
-        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=7718890&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
-        "photos": [
-          "https://cdn.worldota.net/t/x500/extranet/3f/6a/3f6a755567efa826b451df65376b24efb6c4dc92.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/c3/7b/c37ba03f2eab0ceefcf2d9deb07b18799d864313.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/5f/48/5f48dccae80b8daf92e3be151eb23fc0f4b96ed0.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/59/e6/59e665c43fc9f12466b7a4254f3ddc665018e0b3.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/7e/93/7e93c069a7db9bfdcf4802e7d4cd3923597f47e8.JPEG",
-          "https://cdn.worldota.net/t/x500/extranet/96/5d/965daab6882585901faa3542cb637cfaa5858b5d.JPEG"
-        ],
-        "photosTotal": 29
       },
       {
         "name": "2-х комнатная квартира на улице: Новоторжская, д.19",
@@ -390,23 +405,31 @@
         "currency": "RUB",
         "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=11453092&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
         "photos": [
-          "https://cdn2.tu-tu.ru/imghub/view/4872e924-46df-4c76-94ad-08c9e64f14ca/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/3fa41487f0e480a24e170e9e9ecfba85.jpg",
-          "https://cdn2.tu-tu.ru/imghub/view/9d5d5808-a72d-413c-a444-fb41e3aab4cd/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/e27709232cd953e086cdc3be74d807dd.jpg",
-          "https://cdn2.tu-tu.ru/imghub/view/dc32bb0e-2053-4aa7-bdc3-facf673deb90/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/89adf25498ec7353c031fe50e59cd63a.jpg",
-          "https://cdn2.tu-tu.ru/imghub/view/f20839fa-00cc-4af8-a64a-5812de1cadbc/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/f9e3f7f7fdede2f47adb4774e75db52b.jpg",
-          "https://cdn2.tu-tu.ru/imghub/view/95ebec1b-2f82-48af-b0b8-f9d0f7c04a27/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/4c93947f6d7e18ede61b562a7ed97ae3.jpg",
-          "https://cdn2.tu-tu.ru/imghub/view/9405069e-57ae-422e-82c4-b977f2e77dcf/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/8a3283400c2471bab5ffad206ea64ee0.jpg"
+          "https://cdn2.tu-tu.ru/imghub/view/690244e5-409d-4ad0-8f9e-493c1c687d5d/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/3fa41487f0e480a24e170e9e9ecfba85.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/b9135c6d-7799-48aa-8a50-46c3f0c9110a/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/e27709232cd953e086cdc3be74d807dd.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/db1a0dfc-a56a-4671-987a-36cef5dc9110/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/89adf25498ec7353c031fe50e59cd63a.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/4d121344-6e71-44c4-ac66-0ace877456e1/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/f9e3f7f7fdede2f47adb4774e75db52b.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/a9d814d4-5ef6-4041-b31b-687dd00ff69e/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/4c93947f6d7e18ede61b562a7ed97ae3.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/b3b361bd-71ae-40fa-b317-e2fdce03179e/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/8a3283400c2471bab5ffad206ea64ee0.jpg"
         ],
         "photosTotal": 30
       }
     ],
     "hasMore": true
   },
+  "baseline": {
+    "companyTransport": 962.71
+  },
+  "bleisure": {
+    "transport": 1024.41,
+    "hotel": 5398
+  },
   "split": {
-    "company": 962.71,
-    "personalTransport": 61.7,
-    "personalHotel": 7800,
-    "personalTotal": 7861.7,
+    "companyPays": 962.71,
+    "employeeTransport": 61.7,
+    "employeeHotel": 5398,
+    "employeePays": 5459.7,
+    "companySavings": 0,
     "currency": "RUB"
   },
   "disclaimer": "Цены актуальны на момент поиска и могут измениться в корзине. Оплата проходит на Tutu."

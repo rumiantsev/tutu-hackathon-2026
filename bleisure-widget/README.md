@@ -102,9 +102,19 @@ BleisureWidget.init(document.getElementById('root'), data);
     "recommended": { "name", "stars", "rating", "reviewCount", "meal", "freeCancellation", "price", "currency", "url", "photos": [] },
     "alternatives": [ { ... } ]
   },
-  "split": {          // company, personalTransport, personalHotel, personalTotal, currency
-    "company": 654, "personalTransport": 0,
-    "personalHotel": 7800, "personalTotal": 7800
+  "destination": {    // weekendDays, city, note, points[] (курируемые), spa {name, price, url}
+    "weekendDays": 2, "city": "Тверь",
+    "points": ["Набережная Афанасия Никитина", "…"],
+    "spa": { "name": "Отель …", "price": 5627, "url": "…" }
+  },
+  "baseline": { "companyTransport": 654 },                 // рабочий билет (что платила бы компания)
+  "bleisure": { "transport": 500, "hotel": 7800 },         // фактический билет + отель
+  "split": {
+    "companyPays": 500,          // компания платит (min рабочего и bleisure билета)
+    "employeeTransport": 0,      // доплата за билет сверх рабочего
+    "employeeHotel": 7800,       // отель на выходные
+    "employeePays": 7800,        // employeeTransport + employeeHotel
+    "companySavings": 154        // экономия компании, если bleisure-билет дешевле рабочего
   },
   "disclaimer": "Цены актуальны на момент поиска и могут измениться в корзине."
 }

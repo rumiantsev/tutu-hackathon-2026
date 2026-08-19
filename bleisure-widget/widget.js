@@ -43,6 +43,74 @@
     return verbZero + ' стоит столько же \u2014 продление билета бесплатно.';
   }
 
+  function pluralDays(n) {
+    if (n % 10 === 1 && n % 100 !== 11) return 'день';
+    if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) return 'дня';
+    return 'дней';
+  }
+
+  function renderSplit(parts, d, cur) {
+    var split = d.split || {};
+    var dest = d.destination || {};
+    var company = Number(split.companyPays) || 0;
+    var employee = Number(split.employeePays) || 0;
+    var savings = Number(split.companySavings) || 0;
+    var employeeTransport = Number(split.employeeTransport) || 0;
+    var days = dest.weekendDays || 2;
+    var total = company + employee;
+    var companyPct = total > 0 ? (company / total) * 100 : 0;
+    var employeePct = total > 0 ? (employee / total) * 100 : 0;
+
+    parts.push('<div class="bls-split">');
+    parts.push('<div class="bls-benefit">Мини-отпуск на ' + days + ' ' + pluralDays(days) + '</div>');
+    parts.push('<div class="bls-benefit-sub">за ' + fmtMoney(employee, cur) + '</div>');
+    if (savings > 0) {
+      parts.push('<div class="bls-savings">Компания при этом экономит ' + fmtMoney(savings, cur) + '</div>');
+    }
+    parts.push(
+      '<div class="bls-split-bar">',
+      '<div class="bls-split-company" style="width:' + companyPct.toFixed(2) + '%"></div>',
+      '<div class="bls-split-personal" style="width:' + employeePct.toFixed(2) + '%"></div>',
+      '</div>',
+      '<div class="bls-split-legend">',
+      '<span><span class="bls-legend-dot" style="background:var(--bls-company)"></span>Компания</span>',
+      '<span><span class="bls-legend-dot" style="background:var(--bls-personal)"></span>Сотрудник</span>',
+      '</div>',
+      '<div class="bls-split-amounts">',
+      '<div class="bls-split-row"><span class="bls-split-label">Компания — билет</span><span class="bls-split-value bls-split-value--company">' + fmtMoney(company, cur) + '</span></div>',
+      '<div class="bls-split-row"><span class="bls-split-label">Ты — отель' + (employeeTransport > 0 ? ' + билет' : '') + '</span><span class="bls-split-value bls-split-value--personal">' + fmtMoney(employee, cur) + '</span></div>',
+      '</div>',
+      '</div>'
+    );
+  }
+
+  function renderDestination(parts, dest, cur) {
+    if (!dest) return;
+    var hasContent = (dest.points && dest.points.length) || dest.spa || dest.note;
+    if (!hasContent) return;
+    parts.push('<div class="bls-section">');
+    parts.push('<h4 class="bls-section-title">Что можно сделать за выходные</h4>');
+    if (dest.note) parts.push('<p class="bls-note">' + esc(dest.note) + '</p>');
+    parts.push('<ul class="bls-todo">');
+    if (dest.weekendDays) {
+      parts.push('<li class="bls-todo-item bls-todo-days">+' + dest.weekendDays + ' ' + pluralDays(dest.weekendDays) + '</li>');
+    }
+    (dest.points || []).forEach(function (p) {
+      parts.push('<li class="bls-todo-item">' + esc(p) + '</li>');
+    });
+    if (dest.spa) {
+      var spaText = 'SPA / загородный отель';
+      if (dest.spa.price != null) spaText += ' · от ' + fmtMoney(dest.spa.price, cur);
+      if (dest.spa.url) {
+        parts.push('<li class="bls-todo-item"><a class="bls-todo-link" href="' + esc(dest.spa.url) + '" target="_blank" rel="noopener">' + esc(spaText) + '</a></li>');
+      } else {
+        parts.push('<li class="bls-todo-item">' + esc(spaText) + '</li>');
+      }
+    }
+    parts.push('</ul>');
+    parts.push('</div>');
+  }
+
   function renderLeg(parts, leg, cur) {
     if (!leg || !leg.options || !leg.options.length) return;
     parts.push('<div class="bls-leg-block">');
@@ -182,36 +250,7 @@
       '</div>'
     );
 
-    if (split.company != null || split.personalTotal != null) {
-      var company = Number(split.company) || 0;
-      var personal = Number(split.personalTotal) || 0;
-      var total = company + personal;
-      var companyPct = total > 0 ? (company / total) * 100 : 0;
-      var personalPct = total > 0 ? (personal / total) * 100 : 0;
-      var companyLabel = isDep ? 'Компания (рабочий выезд)' : 'Компания (рабочий возврат)';
-
-      parts.push(
-        '<div class="bls-split">',
-        '<div class="bls-split-bar">',
-        '<div class="bls-split-company" style="width:' + companyPct.toFixed(2) + '%"></div>',
-        '<div class="bls-split-personal" style="width:' + personalPct.toFixed(2) + '%"></div>',
-        '</div>',
-        '<div class="bls-split-legend">',
-        '<span><span class="bls-legend-dot" style="background:var(--bls-company)"></span>Компания</span>',
-        '<span><span class="bls-legend-dot" style="background:var(--bls-personal)"></span>Сотрудник</span>',
-        '</div>',
-        '<div class="bls-split-amounts">',
-        '<div class="bls-split-row"><span class="bls-split-label">' + esc(companyLabel) + '</span><span class="bls-split-value bls-split-value--company">' + fmtMoney(company, cur) + '</span></div>',
-        '<div class="bls-split-row"><span class="bls-split-label">Личное (продление + отель)</span><span class="bls-split-value bls-split-value--personal">' + fmtMoney(personal, cur) + '</span></div>',
-        '<div class="bls-split-row"><span class="bls-split-label">Итого</span><span class="bls-split-value">' + fmtMoney(total, cur) + '</span></div>',
-        '</div>',
-        '</div>'
-      );
-    }
-
-    if (tr.delta != null) {
-      parts.push('<div class="bls-punch">' + punchText(tr.extendSide, tr.delta, cur) + ' Главная личная часть \u2014 отель на выходные.</div>');
-    }
+    renderSplit(parts, d, cur);
 
     parts.push('<div class="bls-section">');
     parts.push('<h4 class="bls-section-title">Транспорт · сравнение всех типов</h4>');
@@ -222,6 +261,8 @@
       parts.push('<div class="bls-delta">' + deltaLabel + ': ' + signedMoney(tr.delta, cur) + '</div>');
     }
     parts.push('</div>');
+
+    renderDestination(parts, d.destination, cur);
 
     parts.push('<div class="bls-section">');
     parts.push('<h4 class="bls-section-title">Отель на выходные · ' + esc(hotel.checkIn) + ' \u2192 ' + esc(hotel.checkOut) +
@@ -253,10 +294,9 @@
     }
     parts.push('</div>');
 
-    var ctaText = isDep ? 'Приехать раньше · +' : 'Продлить поездку · +';
     parts.push(
       '<div class="bls-actions">',
-      '<a class="bls-btn bls-btn--primary" href="' + esc((hotel.recommended && hotel.recommended.url) || '#') + '" target="_blank" rel="noopener">' + ctaText + fmtMoney(split.personalTotal, cur) + '</a>',
+      '<a class="bls-btn bls-btn--primary" href="' + esc((hotel.recommended && hotel.recommended.url) || '#') + '" target="_blank" rel="noopener">Получить мини-отпуск · за ' + fmtMoney(split.employeePays, cur) + '</a>',
       '</div>'
     );
 
