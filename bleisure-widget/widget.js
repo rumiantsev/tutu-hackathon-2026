@@ -221,7 +221,7 @@
       html += '</div>';
     }
     if (feats.length) {
-      html += '<div class="bls-filter-group"><span class="bls-filter-label">Фишки</span>';
+      html += '<div class="bls-filter-group"><span class="bls-filter-label">Условия</span>';
       feats.forEach(function (f) {
         html += '<button type="button" class="bls-chip" data-group="features" data-value="' + esc(f) + '">' + esc(FEAT_LABEL[f] || f) + '</button>';
       });
