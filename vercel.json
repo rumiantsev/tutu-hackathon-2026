@@ -6,11 +6,5 @@
       "destination": "/bleisure-widget/demo.html",
       "permanent": false
     }
-  ],
-  "functions": {
-    "api/bleisure.js": {
-      "runtime": "nodejs20.x",
-      "maxDuration": 30
-    }
-  }
+  ]
 }
