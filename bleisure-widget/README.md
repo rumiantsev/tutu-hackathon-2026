@@ -22,6 +22,16 @@ node server.js
 
 Бэкенд не имеет внешних зависимостей (только `http`, `fs`, `fetch` Node 18+).
 
+## Деплой на Vercel
+
+Расчёт вынесен в `bleisure.js`, его используют оба входа:
+
+- `server.js` — локальный dev-сервер (статика + `/api/bleisure`).
+- `../api/bleisure.js` — serverless-функция Vercel (та же логика).
+
+Vercel отдаёт `bleisure-widget/*` как статику, `/` редиректит на
+`demo.html` (см. `vercel.json` в корне `tutu`), `/api/bleisure` бьётся в функцию.
+
 ## Демо
 
 Кейс по умолчанию: **Москва → Тверь, 26–28.08.2026**, продление до 30.08.
@@ -34,7 +44,8 @@ node server.js
 
 ## Файлы
 
-- `server.js` — бэкенд: статика + `/api/bleisure` (ходит в MCP Tutu, считает сплит).
+- `bleisure.js` — расчёт: MCP-клиент + логика сплита (общий для dev и Vercel).
+- `server.js` — локальный dev-сервер: статика + `/api/bleisure`.
 - `widget.js` — логика рендера, без зависимостей.
 - `widget.css` — стили (все классы с префиксом `.bls-`).
 - `demo.html` — форма + виджет (по кнопке дёргает `/api/bleisure`).
