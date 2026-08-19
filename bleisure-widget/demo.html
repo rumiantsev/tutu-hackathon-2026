@@ -68,6 +68,22 @@
       border: 1px dashed #d9dce3;
       border-radius: 14px;
     }
+    .placeholder--error {
+      color: #b42318;
+      border-color: #f2b8b5;
+      background: #fef3f2;
+    }
+    .loader { text-align: center; padding: 40px 24px; color: #6b7280; font-size: 14px; }
+    .loader .spin {
+      width: 30px;
+      height: 30px;
+      border: 3px solid #e6ebf5;
+      border-top-color: #2f6fed;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      animation: bls-spin 0.8s linear infinite;
+    }
+    @keyframes bls-spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -128,6 +144,23 @@
       status.className = 'status' + (isError ? ' status--error' : '');
     }
 
+    function showLoading() {
+      root.innerHTML = '<div class="loader"><div class="spin"></div>Считаем маршрут и отели…</div>';
+    }
+
+    function showError(msg) {
+      root.innerHTML = '';
+      var wrap = document.createElement('div');
+      wrap.className = 'placeholder placeholder--error';
+      wrap.textContent = msg;
+      root.appendChild(wrap);
+    }
+
+    function resetButton() {
+      runBtn.disabled = false;
+      runBtn.textContent = 'Рассчитать';
+    }
+
     function doCalc() {
       var params = new URLSearchParams({
         origin: document.getElementById('origin').value,
@@ -140,24 +173,29 @@
       if (leisure) params.set('leisure', leisure);
 
       runBtn.disabled = true;
+      runBtn.textContent = 'Считаем…';
       setStatus('Считаем…');
+      showLoading();
 
       fetch('/api/bleisure?' + params.toString())
         .then(function (r) { return r.json(); })
         .then(function (data) {
           if (data.error) {
             setStatus(data.error, true);
-            runBtn.disabled = false;
+            showError(data.error);
+            resetButton();
             return;
           }
           BleisureWidget.init(root, data);
           setStatus('Готово · ' + data.trip.origin + ' → ' + data.trip.destination +
             ' · ' + data.trip.departureDate + ' — ' + data.trip.leisureReturnDate);
-          runBtn.disabled = false;
+          resetButton();
         })
         .catch(function (e) {
-          setStatus('Не удалось рассчитать: ' + e.message + ' (запущен ли server.js?)', true);
-          runBtn.disabled = false;
+          var msg = 'Не удалось рассчитать: ' + e.message + ' (запущен ли server.js?)';
+          setStatus(msg, true);
+          showError(msg);
+          resetButton();
         });
     }
 
