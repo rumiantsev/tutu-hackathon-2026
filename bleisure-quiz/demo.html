@@ -38,6 +38,8 @@
       background: #fff;
     }
     .field input:focus { outline: none; border-color: #2f6fed; }
+    :focus-visible { outline: 2px solid #2f6fed; outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { .loader .spin { animation: none; } }
     .f-2 { grid-column: span 2; }
     @media (max-width: 720px) { .f-2 { grid-column: span 6; } }
     .form-actions { margin-top: 14px; display: flex; align-items: center; gap: 12px; }
@@ -91,29 +93,29 @@
     <div class="form-card">
       <div class="form-grid">
         <div class="field f-2">
-          <label>Откуда</label>
+          <label for="origin">Откуда</label>
           <input id="origin" type="text" value="Москва" />
         </div>
         <div class="field f-2">
-          <label>Куда (командировка)</label>
+          <label for="destination">Куда (командировка)</label>
           <input id="destination" type="text" value="Тверь" />
         </div>
         <div class="field f-2">
-          <label>Выезд</label>
+          <label for="depart">Выезд</label>
           <input id="depart" type="date" value="2026-08-26" />
         </div>
         <div class="field f-2">
-          <label>Рабочий возврат</label>
+          <label for="ret">Рабочий возврат</label>
           <input id="ret" type="date" value="2026-08-28" />
         </div>
         <div class="field f-2">
-          <label>Взрослых</label>
+          <label for="adults">Взрослых</label>
           <input id="adults" type="number" min="1" max="6" value="1" />
         </div>
       </div>
       <div class="form-actions">
         <button class="run-btn" id="run">Рассчитать</button>
-        <span class="status" id="status"></span>
+        <span class="status" id="status" aria-live="polite"></span>
       </div>
     </div>
 

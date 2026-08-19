@@ -1,0 +1,21 @@
+{
+  "name": "tutu-hackathon-2026-bleisure",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bleisure-калькулятор — встраиваемый B2B-виджет (командировка + выходные) на живых данных MCP Tutu",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "node bleisure-widget/server.js",
+    "dev:quiz": "node bleisure-quiz/server.js",
+    "test": "node --test",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5"
+  }
+}

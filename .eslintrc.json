@@ -1,0 +1,17 @@
+{
+  "env": {
+    "node": true,
+    "es2021": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2021
+  },
+  "rules": {
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "no-var": "off",
+    "quotes": ["warn", "single"],
+    "semi": ["warn", "always"]
+  },
+  "ignorePatterns": ["bleisure-widget/widget.js", "bleisure-quiz/widget.js"]
+}

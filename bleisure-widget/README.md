@@ -102,10 +102,8 @@ BleisureWidget.init(document.getElementById('root'), data);
     "recommended": { "name", "stars", "rating", "reviewCount", "meal", "freeCancellation", "price", "currency", "url", "photos": [] },
     "alternatives": [ { ... } ]
   },
-  "destination": {    // weekendDays, city, note, points[] (курируемые), spa {name, price, url}
-    "weekendDays": 2, "city": "Тверь",
-    "points": ["Набережная Афанасия Никитина", "…"],
-    "spa": { "name": "Отель …", "price": 5627, "url": "…" }
+  "destination": {    // weekendDays — число выходных дней
+    "weekendDays": 2
   },
   "baseline": { "companyTransport": 654 },                 // рабочий билет (что платила бы компания)
   "bleisure": { "transport": 500, "hotel": 7800 },         // фактический билет + отель
