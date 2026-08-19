@@ -1,0 +1,93 @@
+{
+  "trip": {
+    "origin": "Москва",
+    "destination": "Тверь",
+    "destRegion": "Тверская область",
+    "departureDate": "26 авг · ср",
+    "businessReturnDate": "28 авг · пт",
+    "leisureReturnDate": "30 авг · вс",
+    "travelers": "1 взрослый"
+  },
+  "transport": {
+    "mode": "rail",
+    "modeLabel": "Поезд",
+    "note": "На этом направлении нет авиасообщения — только железная дорога (ФПК / ДОСС).",
+    "cashbackPct": 3.0,
+    "currency": "RUB",
+    "business": {
+      "total": 1634.78,
+      "legs": [
+        {
+          "label": "Туда · 026А «Смена»",
+          "time": "22:00 → 00:14",
+          "price": 672.07,
+          "url": "https://mtp-deeplink.tutu.ru/api/v1/deeplink/explicit/train?geo_mode=unified&departure_time=2026-08-26T22:00:00%2B03:00&departure_geo_point_id=2958868&arrival_geo_point_id=2958624&first_leg_route_number=026%D0%90&fallback_to_vid=true&source=mcp&departure_geo_city_id=2657260&arrival_geo_city_id=2665569"
+        },
+        {
+          "label": "Обратно · 749У «Аврора»",
+          "time": "03:30 → 05:00",
+          "price": 962.71,
+          "url": "https://mtp-deeplink.tutu.ru/api/v1/deeplink/explicit/train?geo_mode=unified&departure_time=2026-08-28T03:30:00%2B03:00&departure_geo_point_id=2958624&arrival_geo_point_id=2958868&first_leg_route_number=749%D0%A3&fallback_to_vid=true&source=mcp&departure_geo_city_id=2665569&arrival_geo_city_id=2657260"
+        }
+      ]
+    },
+    "bleisure": {
+      "total": 1696.48,
+      "returnLeg": {
+        "label": "Обратно · 151А двухэтажный",
+        "time": "15:04 → 17:33",
+        "price": 1024.41,
+        "url": "https://mtp-deeplink.tutu.ru/api/v1/deeplink/explicit/train?geo_mode=unified&departure_time=2026-08-30T15:04:00%2B03:00&departure_geo_point_id=2958624&arrival_geo_point_id=2958868&first_leg_route_number=151%D0%90&fallback_to_vid=true&source=mcp&departure_geo_city_id=2665569&arrival_geo_city_id=2657260"
+      }
+    },
+    "delta": 61.70
+  },
+  "hotel": {
+    "weekendNights": 2,
+    "checkIn": "28 авг",
+    "checkOut": "30 авг",
+    "recommended": {
+      "name": "Отель Премьер",
+      "stars": 3,
+      "rating": 9.47,
+      "reviewCount": 374,
+      "meal": "Завтрак «шведский стол»",
+      "freeCancellation": true,
+      "price": 8715,
+      "currency": "RUB",
+      "url": "https://mtp-deeplink.tutu.ru/api/v1/deeplink/explicit/hotel?hotel_alias=premyer_rossiya_tverskaya_oblast_tver_ul_moskovskaya_d_63&check_in=2026-08-28&check_out=2026-08-30&search_id=37f3da6a1199fc524dcda2acba9a095d&adults=1&source=mcp"
+    },
+    "alternatives": [
+      {
+        "name": "Lemon Loft Hotel",
+        "stars": 3,
+        "rating": 7.44,
+        "reviewCount": 144,
+        "meal": null,
+        "freeCancellation": true,
+        "price": 5627,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=7653247&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d"
+      },
+      {
+        "name": "Номера в Твери",
+        "stars": 2,
+        "rating": 9.04,
+        "reviewCount": 122,
+        "meal": null,
+        "freeCancellation": true,
+        "price": 5398,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=8376255&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d"
+      }
+    ]
+  },
+  "split": {
+    "company": 1634.78,
+    "personalTransport": 61.70,
+    "personalHotel": 8715.0,
+    "personalTotal": 8776.70,
+    "currency": "RUB"
+  },
+  "disclaimer": "Цены актуальны на момент поиска и могут измениться в корзине. Оплата проходит на Tutu."
+}

@@ -1,0 +1,185 @@
+.bls-widget {
+  --bls-company: #2f6fed;
+  --bls-personal: #f5a623;
+  --bls-ink: #1a1a2e;
+  --bls-muted: #6b7280;
+  --bls-bg: #ffffff;
+  --bls-line: #eef0f4;
+  --bls-green: #178a50;
+  --bls-radius: 14px;
+  --bls-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  font-family: var(--bls-font);
+  color: var(--bls-ink);
+  background: var(--bls-bg);
+  border: 1px solid var(--bls-line);
+  border-radius: var(--bls-radius);
+  box-shadow: 0 8px 30px rgba(20, 30, 60, 0.08);
+  max-width: 440px;
+  padding: 18px 18px 16px;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.bls-widget * { box-sizing: border-box; }
+
+.bls-head { margin-bottom: 14px; }
+.bls-kicker {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.1);
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+}
+.bls-title { font-size: 17px; font-weight: 700; margin: 0 0 2px; }
+.bls-subtitle { font-size: 13px; color: var(--bls-muted); margin: 0; }
+
+.bls-split { margin-bottom: 16px; }
+.bls-split-bar {
+  display: flex;
+  height: 14px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--bls-line);
+}
+.bls-split-company { background: var(--bls-company); }
+.bls-split-personal { background: var(--bls-personal); }
+.bls-split-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--bls-muted);
+}
+.bls-legend-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  margin-right: 5px;
+  vertical-align: -1px;
+}
+.bls-split-amounts { margin-top: 8px; }
+.bls-split-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 4px 0;
+  font-size: 13px;
+}
+.bls-split-row + .bls-split-row { border-top: 1px dashed var(--bls-line); }
+.bls-split-label { color: var(--bls-muted); }
+.bls-split-value { font-weight: 700; }
+.bls-split-value--personal { color: #b7791f; }
+.bls-split-value--company { color: var(--bls-company); }
+
+.bls-punch {
+  background: rgba(23, 138, 80, 0.08);
+  border: 1px solid rgba(23, 138, 80, 0.2);
+  color: var(--bls-green);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.bls-section { margin-bottom: 16px; }
+.bls-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--bls-muted);
+  margin: 0 0 8px;
+}
+.bls-note { font-size: 12px; color: var(--bls-muted); margin: 0 0 8px; }
+
+.bls-legs { display: flex; flex-direction: column; gap: 8px; }
+.bls-leg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--bls-line);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.bls-leg-main { flex: 1; min-width: 0; }
+.bls-leg-label { font-weight: 600; font-size: 13px; }
+.bls-leg-time { font-size: 12px; color: var(--bls-muted); margin-top: 1px; }
+.bls-leg-price { font-weight: 700; white-space: nowrap; }
+.bls-leg a { text-decoration: none; }
+
+.bls-return-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.bls-return-card {
+  border: 1px solid var(--bls-line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  text-decoration: none;
+  color: inherit;
+}
+.bls-return-card--leisure { border-color: var(--bls-green); background: rgba(23,138,80,0.04); }
+.bls-return-tag { font-size: 11px; font-weight: 700; color: var(--bls-muted); text-transform: uppercase; letter-spacing: 0.4px; }
+.bls-return-card--leisure .bls-return-tag { color: var(--bls-green); }
+.bls-return-time { font-size: 13px; font-weight: 600; margin-top: 3px; }
+.bls-return-price { font-size: 13px; color: var(--bls-muted); margin-top: 2px; }
+.bls-return-price b { color: var(--bls-ink); }
+.bls-delta {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--bls-green);
+  padding: 6px;
+}
+
+.bls-hotel-card {
+  border: 1px solid var(--bls-line);
+  border-radius: 10px;
+  padding: 11px 12px;
+  margin-bottom: 8px;
+}
+.bls-hotel-card--rec { border-color: var(--bls-company); background: rgba(47,111,237,0.04); }
+.bls-hotel-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.bls-hotel-name { font-weight: 700; font-size: 14px; }
+.bls-hotel-stars { color: #f5a623; font-size: 12px; letter-spacing: 1px; margin-left: 6px; }
+.bls-hotel-meta { font-size: 12px; color: var(--bls-muted); margin-top: 3px; }
+.bls-hotel-badges { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 6px; }
+.bls-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--bls-muted);
+  background: var(--bls-line);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.bls-badge--ok { color: var(--bls-green); background: rgba(23,138,80,0.1); }
+.bls-hotel-price { font-weight: 700; white-space: nowrap; }
+.bls-hotel-per-night { font-size: 11px; color: var(--bls-muted); font-weight: 400; }
+
+.bls-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.bls-btn {
+  display: block;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 11px 12px;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+}
+.bls-btn--primary { background: var(--bls-company); color: #fff; }
+.bls-btn--primary:hover { background: #1f5cd1; }
+.bls-btn--ghost { background: transparent; color: var(--bls-ink); border: 1px solid var(--bls-line); }
+.bls-btn--ghost:hover { background: #f6f7f9; }
+
+.bls-footer { font-size: 11px; color: var(--bls-muted); margin-top: 12px; }
+.bls-footer a { color: var(--bls-muted); }
