@@ -101,7 +101,8 @@ async function multimodalLeg(origin, destination, date, adults) {
     options.push(makeOption(m.key, m.label, off));
   }
   options.sort(function (a, b) { return a.price - b.price; });
-  return options;
+  const hasRailOrAvia = options.some(function (o) { return o.mode === 'railway' || o.mode === 'avia'; });
+  return hasRailOrAvia ? options.filter(function (o) { return o.mode !== 'bus'; }) : options;
 }
 
 function byPrice(a, b) {

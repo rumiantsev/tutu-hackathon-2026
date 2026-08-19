@@ -80,6 +80,45 @@
       '</div>';
   }
 
+  function hotelCardHtml(h, cur, isRec, expanded) {
+    var thumb = (h.photos && h.photos.length)
+      ? '<img class="bls-thumb" src="' + esc(h.photos[0]) + '" alt="" loading="lazy" />'
+      : '';
+    var rating = h.rating != null
+      ? '\u2605 ' + esc(h.rating) + ' · ' + esc(h.reviewCount) + ' отзывов'
+      : esc(h.reviewCount) + ' отзывов';
+    var recBadge = isRec ? '<span class="bls-badge bls-badge--rec">Рекомендуем</span>' : '';
+
+    var b = [];
+    if (h.meal) b.push('<span class="bls-badge bls-badge--ok">' + esc(h.meal) + '</span>');
+    else if (!isRec) b.push('<span class="bls-badge">Без завтрака</span>');
+    if (h.freeCancellation) b.push('<span class="bls-badge bls-badge--ok">Бесплатная отмена</span>');
+    var badges = b.length ? '<div class="bls-hotel-badges">' + b.join('') + '</div>' : '';
+
+    return '<div class="bls-hotel-card' + (isRec ? ' bls-hotel-card--rec' : '') + (expanded ? ' is-expanded' : '') + '">' +
+      '<div class="bls-hotel-head">' +
+      thumb +
+      '<div class="bls-hotel-main">' +
+      '<div class="bls-hotel-top">' +
+      '<div>' +
+      '<span class="bls-hotel-name">' + esc(h.name) + '</span>' +
+      '<span class="bls-hotel-stars">' + stars(h.stars) + '</span>' +
+      recBadge +
+      '</div>' +
+      '<span class="bls-hotel-price">' + fmtMoney(h.price, h.currency || cur) + '</span>' +
+      '</div>' +
+      '<div class="bls-hotel-meta">' + rating + '</div>' +
+      '</div>' +
+      '<span class="bls-hotel-chevron">\u25BE</span>' +
+      '</div>' +
+      '<div class="bls-hotel-body">' +
+      galleryHtml(h.photos) +
+      badges +
+      '<div style="margin-top:8px"><a class="bls-btn ' + (isRec ? 'bls-btn--primary' : 'bls-btn--ghost') + '" href="' + esc(h.url) + '" target="_blank" rel="noopener">Выбрать номер</a></div>' +
+      '</div>' +
+      '</div>';
+  }
+
   function render(root, data) {
     var d = data || {};
     var trip = d.trip || {};
@@ -146,52 +185,12 @@
     parts.push('<p class="bls-note">Личная часть \u2014 проживание на выходные оплачивает сотрудник.</p>');
 
     if (hotel.recommended) {
-      var rec = hotel.recommended;
-      parts.push(
-        '<div class="bls-hotel-card bls-hotel-card--rec">',
-        galleryHtml(rec.photos),
-        '<div class="bls-hotel-body">',
-        '<div class="bls-hotel-top">',
-        '<div><span class="bls-hotel-name">' + esc(rec.name) + '</span>' +
-        '<span class="bls-hotel-stars">' + stars(rec.stars) + '</span></div>',
-        '<span class="bls-hotel-price">' + fmtMoney(rec.price, rec.currency || cur) + '</span>',
-        '</div>',
-        '<div class="bls-hotel-meta">\u2605 ' + esc(rec.rating) + ' · ' + esc(rec.reviewCount) + ' отзывов</div>',
-        '<div class="bls-hotel-badges">',
-        rec.meal ? '<span class="bls-badge bls-badge--ok">' + esc(rec.meal) + '</span>' : '',
-        rec.freeCancellation ? '<span class="bls-badge bls-badge--ok">Бесплатная отмена</span>' : '',
-        '</div>',
-        '<div style="margin-top:8px"><a class="bls-btn bls-btn--primary" href="' + esc(rec.url) + '" target="_blank" rel="noopener">Выбрать номер</a></div>',
-        '</div>',
-        '</div>'
-      );
+      parts.push(hotelCardHtml(hotel.recommended, cur, true, true));
     }
 
     if (hotel.alternatives && hotel.alternatives.length) {
       hotel.alternatives.forEach(function (alt) {
-        var thumb = (alt.photos && alt.photos.length)
-          ? '<img class="bls-thumb" src="' + esc(alt.photos[0]) + '" alt="" loading="lazy" />'
-          : '';
-        parts.push(
-          '<div class="bls-hotel-card">',
-          '<div class="bls-hotel-row">',
-          thumb,
-          '<div class="bls-hotel-main">',
-          '<div class="bls-hotel-top">',
-          '<div><span class="bls-hotel-name">' + esc(alt.name) + '</span>' +
-          '<span class="bls-hotel-stars">' + stars(alt.stars) + '</span></div>',
-          '<span class="bls-hotel-price">' + fmtMoney(alt.price, alt.currency || cur) + '</span>',
-          '</div>',
-          '<div class="bls-hotel-meta">\u2605 ' + esc(alt.rating) + ' · ' + esc(alt.reviewCount) + ' отзывов</div>',
-          '<div class="bls-hotel-badges">',
-          alt.meal ? '<span class="bls-badge bls-badge--ok">' + esc(alt.meal) + '</span>' : '<span class="bls-badge">Без завтрака</span>',
-          alt.freeCancellation ? '<span class="bls-badge bls-badge--ok">Бесплатная отмена</span>' : '',
-          '</div>',
-          '<div style="margin-top:8px"><a class="bls-btn bls-btn--ghost" href="' + esc(alt.url) + '" target="_blank" rel="noopener">Выбрать номер</a></div>',
-          '</div>',
-          '</div>',
-          '</div>'
-        );
+        parts.push(hotelCardHtml(alt, cur, false, false));
       });
     }
     parts.push('</div>');
@@ -207,6 +206,7 @@
 
     root.innerHTML = '<div class="bls-widget">' + parts.join('') + '</div>';
     attachGalleries(root);
+    attachHotels(root);
   }
 
   function attachGalleries(root) {
@@ -233,6 +233,21 @@
         track.addEventListener('scroll', update, { passive: true });
         update();
       })(gals[i]);
+    }
+  }
+
+  function attachHotels(root) {
+    var cards = root.querySelectorAll('.bls-hotel-card');
+    for (var i = 0; i < cards.length; i++) {
+      (function (card) {
+        var head = card.querySelector('.bls-hotel-head');
+        if (!head) return;
+        head.addEventListener('click', function () {
+          var wasExpanded = card.classList.contains('is-expanded');
+          for (var j = 0; j < cards.length; j++) cards[j].classList.remove('is-expanded');
+          if (!wasExpanded) card.classList.add('is-expanded');
+        });
+      })(cards[i]);
     }
   }
 

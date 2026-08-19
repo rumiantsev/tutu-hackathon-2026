@@ -13,14 +13,6 @@
       "date": "28 авг · пт",
       "options": [
         {
-          "mode": "bus",
-          "modeLabel": "Автобус",
-          "title": "Автолидер",
-          "time": "15:05 → 17:00",
-          "price": 654,
-          "url": "https://mtp-deeplink.tutu.ru/api/v1/deeplink/explicit/bus?geo_mode=original&departure_time=2026-08-28T15:05:00%2B03:00&departure_geo_city_id=1369087&arrival_geo_city_id=1447874&hash=A141JcwmOpaErKLEV5%252B0FlfzZxe7aLGixayxkYqlcF6jvq%252FSuerVo8ZbxtARZubY4I5tiQD7BOAtFeg2vEyrfs5Xx9XMRi4kvetu7swM3d%252BapX1ViMiZmMiyvxGVXdBAOGmJDTshvKxs3DdFtLHPLOiIuDaZFpIHhvyyiJHeC82P8Ba%252BszzqQHFH&fallback_to_vid=true&source=mcp"
-        },
-        {
           "mode": "railway",
           "modeLabel": "Поезд",
           "title": "749У «АВРОРА»",
@@ -35,14 +27,6 @@
       "date": "30 авг · вс",
       "options": [
         {
-          "mode": "bus",
-          "modeLabel": "Автобус",
-          "title": "Автолидер",
-          "time": "15:05 → 17:00",
-          "price": 654,
-          "url": "https://mtp-deeplink.tutu.ru/api/v1/deeplink/explicit/bus?geo_mode=original&departure_time=2026-08-30T15:05:00%2B03:00&departure_geo_city_id=1369087&arrival_geo_city_id=1447874&hash=A161RM0mJlVEFux8G%252BfDrbxj595m6nWRSh63nNQ%252Bq51l6PQd6rCbomYneRV6UalZa6Dv%252FLRSNBA79IWKwNHz%252FH7wT9JZMApsRfifgbulWrggZX%252F4elzZ5WzSlehZwbTL7DXnDYjfi8Sh5hLZPYR8nRZdDJP4C8x07SLGnDH8o1FPVorMv5nrQI5HIQ%253D%253D&fallback_to_vid=true&source=mcp"
-        },
-        {
           "mode": "railway",
           "modeLabel": "Поезд",
           "title": "151А «Двухэтажный»",
@@ -52,7 +36,7 @@
         }
       ]
     },
-    "delta": 0
+    "delta": 61.7
   },
   "hotel": {
     "weekendNights": 2,
@@ -128,10 +112,10 @@
     ]
   },
   "split": {
-    "company": 654,
-    "personalTransport": 0,
+    "company": 962.71,
+    "personalTransport": 61.7,
     "personalHotel": 7800,
-    "personalTotal": 7800,
+    "personalTotal": 7861.7,
     "currency": "RUB"
   },
   "disclaimer": "Цены актуальны на момент поиска и могут измениться в корзине. Оплата проходит на Tutu."
