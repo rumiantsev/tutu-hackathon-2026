@@ -229,22 +229,26 @@
     parts.push('<p class="bls-note">Личная часть \u2014 проживание на выходные оплачивает сотрудник.</p>');
 
     var allHotels = [];
+    var remaining = [];
+    parts.push('<div class="bls-compact">');
     if (hotel.recommended) {
       allHotels.push(hotel.recommended);
       parts.push(hotelCardHtml(hotel.recommended, cur, true, true));
     }
-
     var alts = hotel.alternatives || [];
     var visibleAlts = alts.slice(0, 2);
-    var hiddenAlts = alts.slice(2);
-    visibleAlts.forEach(function (alt) { parts.push(hotelCardHtml(alt, cur, false, false)); });
-    alts.forEach(function (alt) { allHotels.push(alt); });
+    remaining = alts.slice(2);
+    visibleAlts.forEach(function (alt) { allHotels.push(alt); parts.push(hotelCardHtml(alt, cur, false, false)); });
+    remaining.forEach(function (alt) { allHotels.push(alt); });
+    parts.push('</div>');
 
-    if (hiddenAlts.length) {
-      parts.push('<button type="button" class="bls-btn bls-btn--ghost bls-more-btn">Посмотреть другие отели (' + hiddenAlts.length + ')</button>');
-      parts.push('<div class="bls-more">');
+    if (remaining.length) {
+      parts.push('<button type="button" class="bls-btn bls-btn--ghost bls-more-btn">Посмотреть другие отели (' + remaining.length + ')</button>');
+      parts.push('<div class="bls-full" style="display:none">');
+      parts.push('<button type="button" class="bls-btn bls-btn--ghost bls-back-btn">\u2190 Назад</button>');
       parts.push(filtersHtml(allHotels));
-      hiddenAlts.forEach(function (alt) { parts.push(hotelCardHtml(alt, cur, false, false)); });
+      parts.push('<div class="bls-full-list"></div>');
+      parts.push('<div class="bls-pager"></div>');
       parts.push('</div>');
     }
     parts.push('</div>');
@@ -261,7 +265,7 @@
     root.innerHTML = '<div class="bls-widget">' + parts.join('') + '</div>';
     attachGalleries(root);
     attachHotels(root);
-    attachHotelControls(root);
+    attachHotelControls(root, remaining, cur);
   }
 
   function attachGalleries(root) {
@@ -306,46 +310,90 @@
     }
   }
 
-  function applyFilters(root) {
-    var active = { stars: {}, meal: {}, features: {} };
-    var chips = root.querySelectorAll('.bls-chip.is-active');
-    for (var i = 0; i < chips.length; i++) {
-      var c = chips[i];
-      var g = c.getAttribute('data-group');
-      var v = c.getAttribute('data-value');
-      if (active[g]) active[g][v] = true;
-    }
-    var cards = root.querySelectorAll('.bls-hotel-card');
-    for (var j = 0; j < cards.length; j++) {
-      var card = cards[j];
-      var show = true;
-      if (Object.keys(active.stars).length && !active.stars[card.getAttribute('data-stars')]) show = false;
-      if (show && Object.keys(active.meal).length && !active.meal[card.getAttribute('data-meal')]) show = false;
-      if (show && Object.keys(active.features).length) {
-        var feats = (card.getAttribute('data-features') || '').split(' ');
-        var ok = false;
-        for (var k = 0; k < feats.length; k++) { if (active.features[feats[k]]) { ok = true; break; } }
-        if (!ok) show = false;
-      }
-      card.style.display = show ? '' : 'none';
-    }
-  }
+  function attachHotelControls(root, remaining, cur) {
+    var PAGE_SIZE = 5;
+    var full = root.querySelector('.bls-full');
+    var moreBtn = root.querySelector('.bls-more-btn');
+    var backBtn = root.querySelector('.bls-back-btn');
+    var listEl = root.querySelector('.bls-full-list');
+    var pagerEl = root.querySelector('.bls-pager');
+    var chips = root.querySelectorAll('.bls-chip');
 
-  function attachHotelControls(root) {
-    var more = root.querySelector('.bls-more');
-    var btn = root.querySelector('.bls-more-btn');
-    if (btn && more) {
-      btn.addEventListener('click', function () {
-        more.classList.add('is-open');
-        btn.style.display = 'none';
+    var state = { page: 0, stars: {}, meal: {}, features: {} };
+
+    function filtered() {
+      return remaining.filter(function (h) {
+        if (Object.keys(state.stars).length && !state.stars[String(h.stars || 0)]) return false;
+        if (Object.keys(state.meal).length && !state.meal[h.mealType || '']) return false;
+        if (Object.keys(state.features).length) {
+          var ok = false;
+          (h.features || []).forEach(function (f) { if (state.features[f]) ok = true; });
+          if (!ok) return false;
+        }
+        return true;
       });
     }
-    var chips = root.querySelectorAll('.bls-chip');
+
+    function renderPage() {
+      var list = filtered();
+      var totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+      if (state.page >= totalPages) state.page = totalPages - 1;
+      if (state.page < 0) state.page = 0;
+      var start = state.page * PAGE_SIZE;
+      var items = list.slice(start, start + PAGE_SIZE);
+      var html = '';
+      items.forEach(function (h) { html += hotelCardHtml(h, cur, false, false); });
+      listEl.innerHTML = html || '<div class="bls-note">Ничего не нашлось под фильтры.</div>';
+      attachGalleries(listEl);
+      attachHotels(listEl);
+
+      if (totalPages > 1) {
+        pagerEl.innerHTML =
+          '<button type="button" class="bls-pager-btn" data-dir="-1"' + (state.page === 0 ? ' disabled' : '') + '>\u2039</button>' +
+          '<span class="bls-pager-info">' + (state.page + 1) + ' / ' + totalPages + '</span>' +
+          '<button type="button" class="bls-pager-btn" data-dir="1"' + (state.page === totalPages - 1 ? ' disabled' : '') + '>\u203A</button>';
+        var pbtns = pagerEl.querySelectorAll('.bls-pager-btn');
+        for (var i = 0; i < pbtns.length; i++) {
+          (function (b) {
+            b.addEventListener('click', function () {
+              state.page += Number(b.getAttribute('data-dir'));
+              renderPage();
+            });
+          })(pbtns[i]);
+        }
+      } else {
+        pagerEl.innerHTML = '';
+      }
+    }
+
+    if (moreBtn && full) {
+      moreBtn.addEventListener('click', function () {
+        var compact = root.querySelector('.bls-compact');
+        if (compact) compact.style.display = 'none';
+        moreBtn.style.display = 'none';
+        full.style.display = 'block';
+        renderPage();
+      });
+    }
+    if (backBtn && full) {
+      backBtn.addEventListener('click', function () {
+        full.style.display = 'none';
+        var compact = root.querySelector('.bls-compact');
+        if (compact) compact.style.display = '';
+        if (moreBtn) moreBtn.style.display = 'block';
+      });
+    }
+
     for (var i = 0; i < chips.length; i++) {
       (function (chip) {
         chip.addEventListener('click', function () {
+          var g = chip.getAttribute('data-group');
+          var v = chip.getAttribute('data-value');
+          var map = g === 'stars' ? state.stars : (g === 'meal' ? state.meal : state.features);
           chip.classList.toggle('is-active');
-          applyFilters(root);
+          if (chip.classList.contains('is-active')) map[v] = true; else delete map[v];
+          state.page = 0;
+          renderPage();
         });
       })(chips[i]);
     }
