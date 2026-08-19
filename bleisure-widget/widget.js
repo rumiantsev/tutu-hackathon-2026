@@ -84,33 +84,6 @@
     );
   }
 
-  function renderDestination(parts, dest, cur) {
-    if (!dest) return;
-    var hasContent = (dest.points && dest.points.length) || dest.spa || dest.note;
-    if (!hasContent) return;
-    parts.push('<div class="bls-section">');
-    parts.push('<h4 class="bls-section-title">Что можно сделать за выходные</h4>');
-    if (dest.note) parts.push('<p class="bls-note">' + esc(dest.note) + '</p>');
-    parts.push('<ul class="bls-todo">');
-    if (dest.weekendDays) {
-      parts.push('<li class="bls-todo-item bls-todo-days">+' + dest.weekendDays + ' ' + pluralDays(dest.weekendDays) + '</li>');
-    }
-    (dest.points || []).forEach(function (p) {
-      parts.push('<li class="bls-todo-item">' + esc(p) + '</li>');
-    });
-    if (dest.spa) {
-      var spaText = 'SPA / загородный отель';
-      if (dest.spa.price != null) spaText += ' · от ' + fmtMoney(dest.spa.price, cur);
-      if (dest.spa.url) {
-        parts.push('<li class="bls-todo-item"><a class="bls-todo-link" href="' + esc(dest.spa.url) + '" target="_blank" rel="noopener">' + esc(spaText) + '</a></li>');
-      } else {
-        parts.push('<li class="bls-todo-item">' + esc(spaText) + '</li>');
-      }
-    }
-    parts.push('</ul>');
-    parts.push('</div>');
-  }
-
   function renderLeg(parts, leg, cur) {
     if (!leg || !leg.options || !leg.options.length) return;
     parts.push('<div class="bls-leg-block">');
@@ -261,8 +234,6 @@
       parts.push('<div class="bls-delta">' + deltaLabel + ': ' + signedMoney(tr.delta, cur) + '</div>');
     }
     parts.push('</div>');
-
-    renderDestination(parts, d.destination, cur);
 
     parts.push('<div class="bls-section">');
     parts.push('<h4 class="bls-section-title">Отель на выходные · ' + esc(hotel.checkIn) + ' \u2192 ' + esc(hotel.checkOut) +

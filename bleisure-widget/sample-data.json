@@ -39,19 +39,7 @@
     "delta": 61.7
   },
   "destination": {
-    "weekendDays": 2,
-    "city": "Тверь",
-    "note": "Город на Волге: купеческая архитектура, прогулки по набережной.",
-    "points": [
-      "Набережная Афанасия Никитина",
-      "Морозовский городок",
-      "Рестораны на Трёхсвятской"
-    ],
-    "spa": {
-      "name": "Отель Lemon Loft Hotel",
-      "price": 5627,
-      "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=7653247&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d"
-    }
+    "weekendDays": 2
   },
   "hotel": {
     "weekendNights": 2,
