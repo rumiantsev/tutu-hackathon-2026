@@ -49,6 +49,18 @@
     return 'дней';
   }
 
+  function pluralNights(n) {
+    if (n % 10 === 1 && n % 100 !== 11) return 'ночь';
+    if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) return 'ночи';
+    return 'ночей';
+  }
+
+  function pluralHotels(n) {
+    if (n % 10 === 1 && n % 100 !== 11) return 'отель';
+    if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) return 'отеля';
+    return 'отелей';
+  }
+
   function renderSplit(parts, d, cur) {
     var split = d.split || {};
     var dest = d.destination || {};
@@ -74,7 +86,7 @@
       '</div>',
       '<div class="bls-split-legend">',
       '<span><span class="bls-legend-dot" style="background:var(--bls-company)"></span>Компания</span>',
-      '<span><span class="bls-legend-dot" style="background:var(--bls-personal)"></span>Сотрудник</span>',
+      '<span><span class="bls-legend-dot" style="background:var(--bls-personal)"></span>Ты</span>',
       '</div>',
       '<div class="bls-split-amounts">',
       '<div class="bls-split-row"><span class="bls-split-label">Компания — билет</span><span class="bls-split-value bls-split-value--company">' + fmtMoney(company, cur) + '</span></div>',
@@ -98,7 +110,7 @@
         '<div class="bls-opt-time">' + esc(o.time) + '</div>',
         '</div>',
         '<span class="bls-opt-price">' + fmtMoney(o.price, cur) + '</span>',
-        o.url ? '<a class="bls-btn bls-btn--ghost bls-opt-link" href="' + esc(o.url) + '" target="_blank" rel="noopener">Билет</a>' : '',
+        o.url ? '<a class="bls-btn bls-btn--ghost bls-opt-link" href="' + esc(o.url) + '" target="_blank" rel="noopener">К билету</a>' : '',
         '</div>'
       );
     });
@@ -211,7 +223,6 @@
     var hotel = d.hotel || {};
     var split = d.split || {};
     var cur = split.currency || tr.currency || 'RUB';
-    var isDep = tr.extendSide === 'departure';
 
     var parts = [];
 
@@ -230,15 +241,14 @@
     renderLeg(parts, tr.businessLeg, cur);
     renderLeg(parts, tr.leisureLeg, cur);
     if (tr.delta != null) {
-      var deltaLabel = isDep ? 'Разница на выезде' : 'Разница на возврате';
-      parts.push('<div class="bls-delta">' + deltaLabel + ': ' + signedMoney(tr.delta, cur) + '</div>');
+      parts.push('<div class="bls-punch">' + esc(punchText(tr.extendSide, tr.delta, cur)) + '</div>');
     }
     parts.push('</div>');
 
     parts.push('<div class="bls-section">');
     parts.push('<h4 class="bls-section-title">Отель на выходные · ' + esc(hotel.checkIn) + ' \u2192 ' + esc(hotel.checkOut) +
-      ' · ' + esc(hotel.weekendNights) + ' ноч.</h4>');
-    parts.push('<p class="bls-note">Личная часть \u2014 проживание на выходные оплачивает сотрудник.</p>');
+      ' · ' + esc(hotel.weekendNights) + ' ' + pluralNights(Number(hotel.weekendNights)) + '</h4>');
+    parts.push('<p class="bls-note">Проживание на выходные \u2014 за твой счёт.</p>');
 
     var allHotels = [];
     var remaining = [];
@@ -255,7 +265,7 @@
     parts.push('</div>');
 
     if (remaining.length) {
-      parts.push('<button type="button" class="bls-btn bls-btn--ghost bls-more-btn">Посмотреть другие отели (' + remaining.length + ')</button>');
+      parts.push('<button type="button" class="bls-btn bls-btn--ghost bls-more-btn">Показать ещё ' + remaining.length + ' ' + pluralHotels(remaining.length) + '</button>');
       parts.push('<div class="bls-full" style="display:none">');
       parts.push('<button type="button" class="bls-btn bls-btn--ghost bls-back-btn">\u2190 Назад</button>');
       parts.push(filtersHtml(allHotels));
@@ -267,7 +277,7 @@
 
     parts.push(
       '<div class="bls-actions">',
-      '<a class="bls-btn bls-btn--primary" href="' + esc((hotel.recommended && hotel.recommended.url) || '#') + '" target="_blank" rel="noopener">Получить мини-отпуск · за ' + fmtMoney(split.employeePays, cur) + '</a>',
+      '<a class="bls-btn bls-btn--primary" href="' + esc((hotel.recommended && hotel.recommended.url) || '#') + '" target="_blank" rel="noopener">Забронировать отель</a>',
       '</div>'
     );
 

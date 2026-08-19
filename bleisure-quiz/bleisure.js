@@ -52,10 +52,10 @@ function buildCollections(main, spa) {
   const budget = withPrice.slice().sort(byPrice).slice(0, 4);
 
   const collections = [
-    makeCollection('luxe', '\uD83D\uDC8E', 'Лакшери', '4–5★, всё включено', luxe),
+    makeCollection('luxe', '\uD83D\uDC8E', 'Лакшери', '4–5★', luxe),
     makeCollection('spa', '\uD83E\uDDD6', 'Спа и wellness', 'спа / сауна / бассейн', spaWithPrice),
-    makeCollection('walk', '\uD83D\uDEB6', 'Погулять по центру', 'в 600 м от центра', walk),
-    makeCollection('budget', '\uD83D\uDCB0', 'Бюджетно', 'дешевле всех', budget)
+    makeCollection('walk', '\uD83D\uDEB6', 'Погулять по центру', 'до 600 м от центра', walk),
+    makeCollection('budget', '\uD83D\uDCB0', 'Бюджетно', 'самые недорогие', budget)
   ];
 
   return collections.filter(function (c) { return c.count > 0; });

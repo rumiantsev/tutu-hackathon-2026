@@ -238,7 +238,7 @@ async function resolveTrip(q) {
     leisureLeg = { label: 'Bleisure выезд', date: fmtDate(leiDepart), options: leiOpts };
     hotelIn = leiDepart;
     hotelOut = depart;
-    headline = 'Командировка ' + fmtDate(depart) + ' — ' + fmtDate(ret) + ' · приезжай уже ' + fmtDate(leiDepart);
+    headline = 'Командировка ' + fmtDate(depart) + ' — ' + fmtDate(ret) + ' · приезжай ' + fmtDate(leiDepart);
   } else {
     const leiReturn = nextSundayAfter(ret);
     const legs = await Promise.all([
