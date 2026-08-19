@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bleisure-калькулятор — квиз</title>
+  <link rel="stylesheet" href="widget.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 32px 16px;
+      background: #f4f5f8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #1a1a2e;
+    }
+    .page { max-width: 960px; margin: 0 auto; }
+    h1 { font-size: 22px; margin: 0 0 6px; }
+    .lead { color: #6b7280; font-size: 14px; margin: 0 0 22px; line-height: 1.5; }
+
+    .form-card {
+      background: #fff;
+      border: 1px solid #eef0f4;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 8px 30px rgba(20, 30, 60, 0.06);
+      margin-bottom: 20px;
+    }
+    .form-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field label { font-size: 12px; font-weight: 600; color: #6b7280; }
+    .field input {
+      border: 1px solid #d9dce3;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 14px;
+      font-family: inherit;
+      color: #1a1a2e;
+      background: #fff;
+    }
+    .field input:focus { outline: none; border-color: #2f6fed; }
+    .f-2 { grid-column: span 2; }
+    @media (max-width: 720px) { .f-2 { grid-column: span 6; } }
+    .form-actions { margin-top: 14px; display: flex; align-items: center; gap: 12px; }
+    .run-btn {
+      background: #2f6fed;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .run-btn:disabled { opacity: 0.55; cursor: progress; }
+    .status { font-size: 13px; color: #6b7280; }
+    .status--error { color: #d33; }
+
+    .demo-label {
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      color: #8b5cf6; margin: 0 0 10px;
+    }
+    .placeholder {
+      color: #6b7280;
+      font-size: 14px;
+      padding: 24px;
+      text-align: center;
+      border: 1px dashed #d9dce3;
+      border-radius: 14px;
+    }
+    .placeholder--error { color: #b42318; border-color: #f2b8b5; background: #fef3f2; }
+    .loader { text-align: center; padding: 40px 24px; color: #6b7280; font-size: 14px; }
+    .loader .spin {
+      width: 30px;
+      height: 30px;
+      border: 3px solid #e6ebf5;
+      border-top-color: #2f6fed;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      animation: bls-spin 0.8s linear infinite;
+    }
+    @keyframes bls-spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Bleisure-калькулятор · квиз</h1>
+    <p class="lead">
+      Командировка + выходные: выбери «вайб» выходных — и получи подходящие отели.
+    </p>
+
+    <div class="form-card">
+      <div class="form-grid">
+        <div class="field f-2">
+          <label>Откуда</label>
+          <input id="origin" type="text" value="Москва" />
+        </div>
+        <div class="field f-2">
+          <label>Куда (командировка)</label>
+          <input id="destination" type="text" value="Тверь" />
+        </div>
+        <div class="field f-2">
+          <label>Выезд</label>
+          <input id="depart" type="date" value="2026-08-26" />
+        </div>
+        <div class="field f-2">
+          <label>Рабочий возврат</label>
+          <input id="ret" type="date" value="2026-08-28" />
+        </div>
+        <div class="field f-2">
+          <label>Взрослых</label>
+          <input id="adults" type="number" min="1" max="6" value="1" />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="run-btn" id="run">Рассчитать</button>
+        <span class="status" id="status"></span>
+      </div>
+    </div>
+
+    <div>
+      <p class="demo-label">Виджет</p>
+      <div id="widget-root"><div class="placeholder">Загрузка…</div></div>
+    </div>
+  </div>
+
+  <script src="widget.js"></script>
+  <script>
+    var root = document.getElementById('widget-root');
+    var runBtn = document.getElementById('run');
+    var status = document.getElementById('status');
+
+    function setStatus(text, isError) {
+      status.textContent = text || '';
+      status.className = 'status' + (isError ? ' status--error' : '');
+    }
+
+    function showLoading() {
+      root.innerHTML = '<div class="loader"><div class="spin"></div>Считаем маршрут и отели…</div>';
+    }
+
+    function showError(msg) {
+      root.innerHTML = '';
+      var wrap = document.createElement('div');
+      wrap.className = 'placeholder placeholder--error';
+      wrap.textContent = msg;
+      root.appendChild(wrap);
+    }
+
+    function resetButton() {
+      runBtn.disabled = false;
+      runBtn.textContent = 'Рассчитать';
+    }
+
+    function doCalc() {
+      var params = new URLSearchParams({
+        origin: document.getElementById('origin').value,
+        destination: document.getElementById('destination').value,
+        depart: document.getElementById('depart').value,
+        ret: document.getElementById('ret').value,
+        adults: document.getElementById('adults').value
+      });
+
+      runBtn.disabled = true;
+      runBtn.textContent = 'Считаем…';
+      setStatus('Считаем…');
+      showLoading();
+
+      fetch('/api/bleisure-quiz?' + params.toString())
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.error) {
+            setStatus(data.error, true);
+            showError(data.error);
+            resetButton();
+            return;
+          }
+          BleisureQuiz.init(root, data);
+          setStatus('Готово · ' + data.trip.headline);
+          resetButton();
+        })
+        .catch(function (e) {
+          var msg = 'Не удалось рассчитать: ' + e.message + ' (запущен ли server.js?)';
+          setStatus(msg, true);
+          showError(msg);
+          resetButton();
+        });
+    }
+
+    runBtn.addEventListener('click', doCalc);
+    doCalc();
+  </script>
+</body>
+</html>

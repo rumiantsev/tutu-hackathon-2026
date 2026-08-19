@@ -5,6 +5,11 @@
       "source": "/",
       "destination": "/bleisure-widget/demo.html",
       "permanent": false
+    },
+    {
+      "source": "/quiz",
+      "destination": "/bleisure-quiz/demo.html",
+      "permanent": false
     }
   ]
 }
