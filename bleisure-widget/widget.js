@@ -33,11 +33,14 @@
     return out;
   }
 
-  function punchText(delta, cur) {
+  function punchText(extendSide, delta, cur) {
     var n = Number(delta);
-    if (n > 0) return 'Продлить возврат до воскресенья — ' + signedMoney(n, cur) + ' за билет.';
-    if (n < 0) return 'Возврат в воскресенье даже дешевле на ' + fmtMoney(-n, cur) + '.';
-    return 'Возврат в воскресенье стоит столько же — продление билета бесплатно.';
+    var isDep = extendSide === 'departure';
+    var verbPos = isDep ? 'Приехать в субботу' : 'Вернуться в воскресенье';
+    var verbZero = isDep ? 'Выезд в субботу' : 'Возврат в воскресенье';
+    if (n > 0) return verbPos + ' \u2014 ' + signedMoney(n, cur) + ' за билет.';
+    if (n < 0) return verbPos + ' даже дешевле на ' + fmtMoney(-n, cur) + '.';
+    return verbZero + ' стоит столько же \u2014 продление билета бесплатно.';
   }
 
   function renderLeg(parts, leg, cur) {
@@ -61,6 +64,22 @@
     parts.push('</div></div>');
   }
 
+  function galleryHtml(photos) {
+    if (!photos || !photos.length) return '';
+    var imgs = photos.map(function (p) {
+      return '<img class="bls-gallery-img" src="' + esc(p) + '" alt="" loading="lazy" />';
+    }).join('');
+    var controls = photos.length > 1
+      ? '<button type="button" class="bls-gallery-btn bls-gallery-prev" aria-label="Назад">\u2039</button>' +
+        '<button type="button" class="bls-gallery-btn bls-gallery-next" aria-label="Вперёд">\u203A</button>' +
+        '<div class="bls-gallery-counter">1 / ' + photos.length + '</div>'
+      : '';
+    return '<div class="bls-gallery">' +
+      '<div class="bls-gallery-track">' + imgs + '</div>' +
+      controls +
+      '</div>';
+  }
+
   function render(root, data) {
     var d = data || {};
     var trip = d.trip || {};
@@ -68,6 +87,7 @@
     var hotel = d.hotel || {};
     var split = d.split || {};
     var cur = split.currency || tr.currency || 'RUB';
+    var isDep = tr.extendSide === 'departure';
 
     var parts = [];
 
@@ -75,8 +95,7 @@
       '<div class="bls-head">',
       '<span class="bls-kicker">Bleisure</span>',
       '<div class="bls-title">' + esc(trip.origin) + ' \u2192 ' + esc(trip.destination) + '</div>',
-      '<p class="bls-subtitle">Командировка ' + esc(trip.departureDate) + ' \u00b7 ' + esc(trip.businessReturnDate) +
-        ' \u00b7 продли до ' + esc(trip.leisureReturnDate) + '</p>',
+      '<p class="bls-subtitle">' + esc(trip.headline) + '</p>',
       '</div>'
     );
 
@@ -86,6 +105,7 @@
       var total = company + personal;
       var companyPct = total > 0 ? (company / total) * 100 : 0;
       var personalPct = total > 0 ? (personal / total) * 100 : 0;
+      var companyLabel = isDep ? 'Компания (рабочий выезд)' : 'Компания (рабочий возврат)';
 
       parts.push(
         '<div class="bls-split">',
@@ -98,37 +118,39 @@
         '<span><span class="bls-legend-dot" style="background:var(--bls-personal)"></span>Сотрудник</span>',
         '</div>',
         '<div class="bls-split-amounts">',
-        '<div class="bls-split-row"><span class="bls-split-label">Компания (рабочий билет)</span><span class="bls-split-value bls-split-value--company">' + fmtMoney(company, cur) + '</span></div>',
-        '<div class="bls-split-row"><span class="bls-split-label">Личное (билет + отель)</span><span class="bls-split-value bls-split-value--personal">' + fmtMoney(personal, cur) + '</span></div>',
-        '<div class="bls-split-row"><span class="bls-split-label">Итого поездка</span><span class="bls-split-value">' + fmtMoney(total, cur) + '</span></div>',
+        '<div class="bls-split-row"><span class="bls-split-label">' + esc(companyLabel) + '</span><span class="bls-split-value bls-split-value--company">' + fmtMoney(company, cur) + '</span></div>',
+        '<div class="bls-split-row"><span class="bls-split-label">Личное (продление + отель)</span><span class="bls-split-value bls-split-value--personal">' + fmtMoney(personal, cur) + '</span></div>',
+        '<div class="bls-split-row"><span class="bls-split-label">Итого</span><span class="bls-split-value">' + fmtMoney(total, cur) + '</span></div>',
         '</div>',
         '</div>'
       );
     }
 
     if (tr.delta != null) {
-      parts.push('<div class="bls-punch">' + punchText(tr.delta, cur) + ' Главная личная часть — отель на выходные.</div>');
+      parts.push('<div class="bls-punch">' + punchText(tr.extendSide, tr.delta, cur) + ' Главная личная часть \u2014 отель на выходные.</div>');
     }
 
     parts.push('<div class="bls-section">');
     parts.push('<h4 class="bls-section-title">Транспорт · сравнение всех типов</h4>');
-    renderLeg(parts, tr.outbound, cur);
-    renderLeg(parts, tr.businessReturn, cur);
-    renderLeg(parts, tr.leisureReturn, cur);
+    renderLeg(parts, tr.businessLeg, cur);
+    renderLeg(parts, tr.leisureLeg, cur);
     if (tr.delta != null) {
-      parts.push('<div class="bls-delta">Разница на возврате: ' + signedMoney(tr.delta, cur) + '</div>');
+      var deltaLabel = isDep ? 'Разница на выезде' : 'Разница на возврате';
+      parts.push('<div class="bls-delta">' + deltaLabel + ': ' + signedMoney(tr.delta, cur) + '</div>');
     }
     parts.push('</div>');
 
     parts.push('<div class="bls-section">');
     parts.push('<h4 class="bls-section-title">Отель на выходные · ' + esc(hotel.checkIn) + ' \u2192 ' + esc(hotel.checkOut) +
       ' · ' + esc(hotel.weekendNights) + ' ноч.</h4>');
-    parts.push('<p class="bls-note">Личная часть — проживание на выходные оплачивает сотрудник.</p>');
+    parts.push('<p class="bls-note">Личная часть \u2014 проживание на выходные оплачивает сотрудник.</p>');
 
     if (hotel.recommended) {
       var rec = hotel.recommended;
       parts.push(
         '<div class="bls-hotel-card bls-hotel-card--rec">',
+        galleryHtml(rec.photos),
+        '<div class="bls-hotel-body">',
         '<div class="bls-hotel-top">',
         '<div><span class="bls-hotel-name">' + esc(rec.name) + '</span>' +
         '<span class="bls-hotel-stars">' + stars(rec.stars) + '</span></div>',
@@ -140,14 +162,21 @@
         rec.freeCancellation ? '<span class="bls-badge bls-badge--ok">Бесплатная отмена</span>' : '',
         '</div>',
         '<div style="margin-top:8px"><a class="bls-btn bls-btn--primary" href="' + esc(rec.url) + '" target="_blank" rel="noopener">Выбрать номер</a></div>',
+        '</div>',
         '</div>'
       );
     }
 
     if (hotel.alternatives && hotel.alternatives.length) {
       hotel.alternatives.forEach(function (alt) {
+        var thumb = (alt.photos && alt.photos.length)
+          ? '<img class="bls-thumb" src="' + esc(alt.photos[0]) + '" alt="" loading="lazy" />'
+          : '';
         parts.push(
           '<div class="bls-hotel-card">',
+          '<div class="bls-hotel-row">',
+          thumb,
+          '<div class="bls-hotel-main">',
           '<div class="bls-hotel-top">',
           '<div><span class="bls-hotel-name">' + esc(alt.name) + '</span>' +
           '<span class="bls-hotel-stars">' + stars(alt.stars) + '</span></div>',
@@ -159,21 +188,52 @@
           alt.freeCancellation ? '<span class="bls-badge bls-badge--ok">Бесплатная отмена</span>' : '',
           '</div>',
           '<div style="margin-top:8px"><a class="bls-btn bls-btn--ghost" href="' + esc(alt.url) + '" target="_blank" rel="noopener">Выбрать номер</a></div>',
+          '</div>',
+          '</div>',
           '</div>'
         );
       });
     }
     parts.push('</div>');
 
+    var ctaText = isDep ? 'Приехать раньше · +' : 'Продлить поездку · +';
     parts.push(
       '<div class="bls-actions">',
-      '<a class="bls-btn bls-btn--primary" href="' + esc((hotel.recommended && hotel.recommended.url) || '#') + '" target="_blank" rel="noopener">Продлить поездку · +' + fmtMoney(split.personalTotal, cur) + '</a>',
+      '<a class="bls-btn bls-btn--primary" href="' + esc((hotel.recommended && hotel.recommended.url) || '#') + '" target="_blank" rel="noopener">' + ctaText + fmtMoney(split.personalTotal, cur) + '</a>',
       '</div>'
     );
 
     parts.push('<div class="bls-footer">' + esc(d.disclaimer || '') + '</div>');
 
     root.innerHTML = '<div class="bls-widget">' + parts.join('') + '</div>';
+    attachGalleries(root);
+  }
+
+  function attachGalleries(root) {
+    var gals = root.querySelectorAll('.bls-gallery');
+    for (var i = 0; i < gals.length; i++) {
+      (function (gal) {
+        var track = gal.querySelector('.bls-gallery-track');
+        var counter = gal.querySelector('.bls-gallery-counter');
+        var prev = gal.querySelector('.bls-gallery-prev');
+        var next = gal.querySelector('.bls-gallery-next');
+        if (!track) return;
+        function update() {
+          if (!counter) return;
+          var w = track.clientWidth;
+          var idx = w > 0 ? Math.round(track.scrollLeft / w) + 1 : 1;
+          var total = track.children.length;
+          counter.textContent = idx + ' / ' + total;
+        }
+        function scrollByDir(dir) {
+          track.scrollBy({ left: dir * track.clientWidth, behavior: 'smooth' });
+        }
+        if (prev) prev.addEventListener('click', function () { scrollByDir(-1); });
+        if (next) next.addEventListener('click', function () { scrollByDir(1); });
+        track.addEventListener('scroll', update, { passive: true });
+        update();
+      })(gals[i]);
+    }
   }
 
   function parseConfig(node) {

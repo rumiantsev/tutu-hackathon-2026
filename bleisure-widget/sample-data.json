@@ -1,1 +1,138 @@
-{"trip":{"origin":"Москва","destination":"Тверь","departureDate":"26 авг · ср","businessReturnDate":"28 авг · пт","leisureReturnDate":"30 авг · вс","travelers":"1 взрослый"},"transport":{"currency":"RUB","outbound":{"label":"Туда","date":"26 авг · ср","options":[{"mode":"etrain","modeLabel":"Электричка","title":"6710 «Электричка»","time":"13:37 → 16:17","price":668,"url":"https://www.tutu.ru/rasp.php?st1=79310&st2=83010&date=26.08.2026"},{"mode":"railway","modeLabel":"Поезд","title":"026А «Смена – А. Бетанкур (двухэтажный)»","time":"22:00 → 00:14","price":672.07,"url":"https://www.tutu.ru/poezda/order/?departure_st=2657260&arrival_st=2665569&dep_st=2006004&arr_st=2004600&tn=026%D0%90&date=26.08.2026+22:00:00"},{"mode":"bus","modeLabel":"Автобус","title":"Автолидер","time":"08:00 → 09:55","price":690,"url":"https://mtp-deeplink.tutu.ru/api/v1/deeplink/explicit/bus?geo_mode=original&departure_time=2026-08-26T08:00:00%2B03:00&departure_geo_city_id=1447874&arrival_geo_city_id=1369087&hash=IxelhM1WJtTLasJVb%252BRDM0KzSbP5D6v3tdu3nNSewiVUZtjx%252FkUj6INNKtIztbclOLK6ZiIyhtFMddbk5%252Fn%252BOz8jU9kFXo0DXWbT%252BxiU25KkkwFbW1ze7C7o4o1kZsaoytmBcIdIJXIv%252FTxbjSQ%252FdYXEUwo8t%252BCanYQIds6mIw%253D%253D&fallback_to_vid=true&source=mcp"}]},"businessReturn":{"label":"Рабочий возврат","date":"28 авг · пт","options":[{"mode":"bus","modeLabel":"Автобус","title":"Автолидер","time":"15:05 → 17:00","price":654,"url":"https://mtp-deeplink.tutu.ru/api/v1/deeplink/explicit/bus?geo_mode=original&departure_time=2026-08-28T15:05:00%2B03:00&departure_geo_city_id=1369087&arrival_geo_city_id=1447874&hash=A141JcwmOpaErKLEV5%252B0FlfzZxe7aLGixayxkYqlcF6jvq%252FSuerVo8ZbxtARZubY4I5tiQD7BOAtFeg2vEyrfs5Xx9XMRi4kvetu7swM3d%252BapX1ViMiZmMiyvxGVXdBAOGmJDTshvKxs3DdFtLHPLOiIuDaZFpIHhvyyiJHeC82P8Ba%252BszzqQHFH&fallback_to_vid=true&source=mcp"},{"mode":"etrain","modeLabel":"Электричка","title":"6701 «Электричка»","time":"04:00 → 07:10","price":668,"url":"https://www.tutu.ru/rasp.php?st1=83010&st2=79310&date=28.08.2026"},{"mode":"railway","modeLabel":"Поезд","title":"749У «АВРОРА»","time":"03:30 → 05:00","price":962.71,"url":"https://www.tutu.ru/poezda/order/?departure_st=2665569&arrival_st=2657260&dep_st=2004600&arr_st=2006004&tn=749%D0%A3&date=28.08.2026+03:30:00"}]},"leisureReturn":{"label":"Bleisure возврат","date":"30 авг · вс","options":[{"mode":"bus","modeLabel":"Автобус","title":"Автолидер","time":"15:05 → 17:00","price":654,"url":"https://mtp-deeplink.tutu.ru/api/v1/deeplink/explicit/bus?geo_mode=original&departure_time=2026-08-30T15:05:00%2B03:00&departure_geo_city_id=1369087&arrival_geo_city_id=1447874&hash=A161RM0mJlVEFux8G%252BfDrbxj595m6nWRSh63nNQ%252Bq51l6PQd6rCbomYneRV6UalZa6Dv%252FLRSNBA79IWKwNHz%252FH7wT9JZMApsRfifgbulWrggZX%252F4elzZ5WzSlehZwbTL7DXnDYjfi8Sh5hLZPYR8nRZdDJP4C8x07SLGnDH8o1FPVorMv5nrQI5HIQ%253D%253D&fallback_to_vid=true&source=mcp"},{"mode":"etrain","modeLabel":"Электричка","title":"6703 «Электричка»","time":"04:48 → 07:48","price":668,"url":"https://www.tutu.ru/rasp.php?st1=83010&st2=79310&date=30.08.2026"},{"mode":"railway","modeLabel":"Поезд","title":"151А «Двухэтажный»","time":"15:04 → 17:33","price":1024.41,"url":"https://www.tutu.ru/poezda/order/?departure_st=2665569&arrival_st=2657260&dep_st=2004600&arr_st=2006004&tn=151%D0%90&date=30.08.2026+15:04:00"}]},"businessTotal":1322,"bleisureTotal":1322,"delta":0},"hotel":{"weekendNights":2,"checkIn":"28 авг · пт","checkOut":"30 авг · вс","recommended":{"name":"Отель Тверь","stars":3,"rating":7.89,"reviewCount":57,"meal":"Завтрак включён","freeCancellation":true,"price":7800,"currency":"RUB","url":"https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=9051907&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d"},"alternatives":[{"name":"Отель Lemon Loft Hotel","stars":3,"rating":7.44,"reviewCount":144,"meal":null,"freeCancellation":true,"price":5627,"currency":"RUB","url":"https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=7653247&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d"},{"name":"Отель Премьер","stars":3,"rating":9.47,"reviewCount":374,"meal":"Завтрак \"шведский стол\"","freeCancellation":true,"price":8715,"currency":"RUB","url":"https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=11450276&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d"}]},"split":{"company":1322,"personalTransport":0,"personalHotel":7800,"personalTotal":7800,"currency":"RUB"},"disclaimer":"Цены актуальны на момент поиска и могут измениться в корзине. Оплата проходит на Tutu."}
+{
+  "trip": {
+    "origin": "Москва",
+    "destination": "Тверь",
+    "headline": "Командировка 26 авг · ср — 28 авг · пт · вернись 30 авг · вс",
+    "travelers": "1 взрослый"
+  },
+  "transport": {
+    "currency": "RUB",
+    "extendSide": "return",
+    "businessLeg": {
+      "label": "Рабочий возврат",
+      "date": "28 авг · пт",
+      "options": [
+        {
+          "mode": "bus",
+          "modeLabel": "Автобус",
+          "title": "Автолидер",
+          "time": "15:05 → 17:00",
+          "price": 654,
+          "url": "https://mtp-deeplink.tutu.ru/api/v1/deeplink/explicit/bus?geo_mode=original&departure_time=2026-08-28T15:05:00%2B03:00&departure_geo_city_id=1369087&arrival_geo_city_id=1447874&hash=A141JcwmOpaErKLEV5%252B0FlfzZxe7aLGixayxkYqlcF6jvq%252FSuerVo8ZbxtARZubY4I5tiQD7BOAtFeg2vEyrfs5Xx9XMRi4kvetu7swM3d%252BapX1ViMiZmMiyvxGVXdBAOGmJDTshvKxs3DdFtLHPLOiIuDaZFpIHhvyyiJHeC82P8Ba%252BszzqQHFH&fallback_to_vid=true&source=mcp"
+        },
+        {
+          "mode": "railway",
+          "modeLabel": "Поезд",
+          "title": "749У «АВРОРА»",
+          "time": "03:30 → 05:00",
+          "price": 962.71,
+          "url": "https://www.tutu.ru/poezda/order/?departure_st=2665569&arrival_st=2657260&dep_st=2004600&arr_st=2006004&tn=749%D0%A3&date=28.08.2026+03:30:00"
+        }
+      ]
+    },
+    "leisureLeg": {
+      "label": "Bleisure возврат",
+      "date": "30 авг · вс",
+      "options": [
+        {
+          "mode": "bus",
+          "modeLabel": "Автобус",
+          "title": "Автолидер",
+          "time": "15:05 → 17:00",
+          "price": 654,
+          "url": "https://mtp-deeplink.tutu.ru/api/v1/deeplink/explicit/bus?geo_mode=original&departure_time=2026-08-30T15:05:00%2B03:00&departure_geo_city_id=1369087&arrival_geo_city_id=1447874&hash=A161RM0mJlVEFux8G%252BfDrbxj595m6nWRSh63nNQ%252Bq51l6PQd6rCbomYneRV6UalZa6Dv%252FLRSNBA79IWKwNHz%252FH7wT9JZMApsRfifgbulWrggZX%252F4elzZ5WzSlehZwbTL7DXnDYjfi8Sh5hLZPYR8nRZdDJP4C8x07SLGnDH8o1FPVorMv5nrQI5HIQ%253D%253D&fallback_to_vid=true&source=mcp"
+        },
+        {
+          "mode": "railway",
+          "modeLabel": "Поезд",
+          "title": "151А «Двухэтажный»",
+          "time": "15:04 → 17:33",
+          "price": 1024.41,
+          "url": "https://www.tutu.ru/poezda/order/?departure_st=2665569&arrival_st=2657260&dep_st=2004600&arr_st=2006004&tn=151%D0%90&date=30.08.2026+15:04:00"
+        }
+      ]
+    },
+    "delta": 0
+  },
+  "hotel": {
+    "weekendNights": 2,
+    "checkIn": "28 авг · пт",
+    "checkOut": "30 авг · вс",
+    "recommended": {
+      "name": "Отель Тверь",
+      "stars": 3,
+      "rating": 7.89,
+      "reviewCount": 57,
+      "meal": "Завтрак включён",
+      "freeCancellation": true,
+      "price": 7800,
+      "currency": "RUB",
+      "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=9051907&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+      "photos": [
+        "https://cdn.worldota.net/t/x500/extranet/c6/87/c687fd2f042a16214c2e54dc5d5684f3d0d463cc.jpeg",
+        "https://cdn.worldota.net/t/x500/extranet/a7/3d/a73d9c169fd9b478776d7e368489d7e769008fd7.jpeg",
+        "https://cdn.worldota.net/t/x500/extranet/c0/cd/c0cd911330bc037d03607c02d97f0d6eefa48220.jpeg",
+        "https://cdn.worldota.net/t/x500/extranet/22/7f/227f98896060401cbc98dad69b677e495ceb6d94.jpeg",
+        "https://cdn.worldota.net/t/x500/extranet/e5/78/e5786bbb885e57780fb65d435bdf834b42a5de32.jpeg",
+        "https://cdn.worldota.net/t/x500/extranet/a5/89/a58950b51a9b95f8a01abc668f6ddb8d88dc7dad.jpeg",
+        "https://cdn.worldota.net/t/x500/extranet/a6/19/a619a8094ce3007fb57857c08f19251ad31ddfeb.jpeg",
+        "https://cdn.worldota.net/t/x500/extranet/55/8b/558babb6d22411865b709761ecf71fee7fcf519b.jpeg"
+      ],
+      "photosTotal": 80
+    },
+    "alternatives": [
+      {
+        "name": "Отель Lemon Loft Hotel",
+        "stars": 3,
+        "rating": 7.44,
+        "reviewCount": 144,
+        "meal": null,
+        "freeCancellation": true,
+        "price": 5627,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=7653247&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn2.tu-tu.ru/imghub/view/d665feb3-fe75-429b-b647-81622287c155/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/86891b0ee45c98ca0c26e0f0f592b000.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/544ab214-d461-4778-affc-492d94f2b00f/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/24362a5de7d6dc41798d42754d64c974.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/bf700808-d1c6-4eee-946f-bb5b8f62b7cb/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/fa184f357ea2ef62e7681d4ebced15fc.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/0704afa2-ec83-4ade-a4dc-d2e591b4023e/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/dadafcb0ce591d000f240b49e01b5195.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/d98be6b6-88ea-4bb4-bb9a-e92917707540/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/21a55003b2ffba4eb7e76734e12a690d.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/963a4476-4972-4532-b863-167017434b89/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/a41375ce1c888d38fa6aa0d6f6cf58dc.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/46129cf1-b915-4e88-b512-981629ddcfc4/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/828748417fa2245355d7c346fdadc7a2.jpg",
+          "https://cdn2.tu-tu.ru/imghub/view/8c7c7844-e4f6-4de7-836e-c974cf9e4721/resize_500_500/4271b6c12b3a41b87b17f2bfcd92ed9a/fd2c84d2899076e9a17e445e3c94fea2.jpg"
+        ],
+        "photosTotal": 100
+      },
+      {
+        "name": "Отель Морозовский",
+        "stars": 0,
+        "rating": 9.23,
+        "reviewCount": 12,
+        "meal": null,
+        "freeCancellation": true,
+        "price": 8000,
+        "currency": "RUB",
+        "url": "https://hotel.tutu.ru/offers/details?business=0&check_in=2026-08-28&check_out=2026-08-30&geo_id=10447517&geo_name=%D0%A2%D0%B2%D0%B5%D1%80%D1%8C&room%5B0%5D=1&search_id=37f3da6a1199fc524dcda2acba9a095d",
+        "photos": [
+          "https://cdn.worldota.net/t/x500/extranet/13/6b/136bf6676548399a192a52327b4a28c27858ca77.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/6d/2c/6d2c4f5059db2a56eda77e9de4614b4eb2b94ffb.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/4e/d5/4ed5fc2560540a0d8ca3f85f18ea13636f9961db.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/4b/c9/4bc91806b44d452b7d88dae77a7598eba1646de0.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/ff/11/ff1141192c63490e6c858d75624c93c02b33c716.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/30/a4/30a4830789f23788de0e96c6a2c04ed1fec3b809.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/ac/6b/ac6b4623f437b4a9c7cf2c505c2e238ab94d0788.JPEG",
+          "https://cdn.worldota.net/t/x500/extranet/5e/61/5e6133c7ba91accbbfe1b4ef9d07cdf8f61c41d6.JPEG"
+        ],
+        "photosTotal": 23
+      }
+    ]
+  },
+  "split": {
+    "company": 654,
+    "personalTransport": 0,
+    "personalHotel": 7800,
+    "personalTotal": 7800,
+    "currency": "RUB"
+  },
+  "disclaimer": "Цены актуальны на момент поиска и могут измениться в корзине. Оплата проходит на Tutu."
+}

@@ -7,7 +7,6 @@ const DAYS = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
 
 const MODES = [
   { key: 'railway', label: 'Поезд', tool: 'search_rail', args: function (a) { return { passengers: a }; } },
-  { key: 'etrain', label: 'Электричка', tool: 'search_etrain', args: function () { return {}; } },
   { key: 'bus', label: 'Автобус', tool: 'search_bus', args: function (a) { return { adults: a }; } },
   { key: 'avia', label: 'Самолёт', tool: 'search_avia', args: function (a) { return { adults: a }; } }
 ];
@@ -32,6 +31,12 @@ function fmtDate(iso) {
 function nextSundayAfter(iso) {
   const dt = parseIso(iso);
   do { dt.setDate(dt.getDate() + 1); } while (dt.getDay() !== 0);
+  return toIso(dt);
+}
+
+function previousSaturday(iso) {
+  const dt = parseIso(iso);
+  do { dt.setDate(dt.getDate() - 1); } while (dt.getDay() !== 6);
   return toIso(dt);
 }
 
@@ -129,7 +134,9 @@ function hotelCard(h) {
     freeCancellation: !!bo.free_cancellation,
     price: bo.price ? bo.price.amount : null,
     currency: bo.price ? bo.price.currency : 'RUB',
-    url: bo.checkout_url || null
+    url: bo.checkout_url || null,
+    photos: h.photos || [],
+    photosTotal: h.photos_total || (h.photos ? h.photos.length : 0)
   };
 }
 
@@ -138,38 +145,56 @@ async function computeBleisure(q) {
   const destination = (q.destination || '').trim();
   const depart = q.depart;
   const ret = q.ret;
-  const leisure = q.leisure || nextSundayAfter(ret);
   const adults = Math.min(6, Math.max(1, Number(q.adults || 1)));
 
   if (!origin || !destination || !depart || !ret) {
     return { error: 'Укажи откуда, куда, даты выезда и возврата.' };
   }
-  if (parseIso(leisure) <= parseIso(ret)) {
-    return { error: 'Дата bleisure-возврата должна быть позже рабочего возврата.' };
+  if (parseIso(ret) <= parseIso(depart)) {
+    return { error: 'Дата возврата должна быть позже даты выезда.' };
   }
 
-  const outOpts = await multimodalLeg(origin, destination, depart, adults);
-  const bizOpts = await multimodalLeg(destination, origin, ret, adults);
-  const leiOpts = await multimodalLeg(destination, origin, leisure, adults);
+  const depDay = parseIso(depart).getDay();
+  const extendSide = depDay === 1 ? 'departure' : 'return';
 
-  if (!outOpts.length) return { error: 'Не нашли транспорт из «' + origin + '» в «' + destination + '» на ' + fmtDate(depart) + '.' };
-  if (!bizOpts.length) return { error: 'Не нашли транспорт обратно на ' + fmtDate(ret) + '.' };
-  if (!leiOpts.length) return { error: 'Не нашли транспорт обратно на ' + fmtDate(leisure) + '.' };
+  let businessLeg;
+  let leisureLeg;
+  let hotelIn;
+  let hotelOut;
+  let headline;
+
+  if (extendSide === 'departure') {
+    const leiDepart = previousSaturday(depart);
+    const bizOpts = await multimodalLeg(origin, destination, depart, adults);
+    const leiOpts = await multimodalLeg(origin, destination, leiDepart, adults);
+    if (!bizOpts.length) return { error: 'Не нашли транспорт из «' + origin + '» в «' + destination + '» на ' + fmtDate(depart) + '.' };
+    if (!leiOpts.length) return { error: 'Не нашли транспорт из «' + origin + '» в «' + destination + '» на ' + fmtDate(leiDepart) + '.' };
+    businessLeg = { label: 'Рабочий выезд', date: fmtDate(depart), options: bizOpts };
+    leisureLeg = { label: 'Bleisure выезд', date: fmtDate(leiDepart), options: leiOpts };
+    hotelIn = leiDepart;
+    hotelOut = depart;
+    headline = 'Командировка ' + fmtDate(depart) + ' — ' + fmtDate(ret) + ' · приезжай уже ' + fmtDate(leiDepart);
+  } else {
+    const leiReturn = nextSundayAfter(ret);
+    const bizOpts = await multimodalLeg(destination, origin, ret, adults);
+    const leiOpts = await multimodalLeg(destination, origin, leiReturn, adults);
+    if (!bizOpts.length) return { error: 'Не нашли транспорт обратно на ' + fmtDate(ret) + '.' };
+    if (!leiOpts.length) return { error: 'Не нашли транспорт обратно на ' + fmtDate(leiReturn) + '.' };
+    businessLeg = { label: 'Рабочий возврат', date: fmtDate(ret), options: bizOpts };
+    leisureLeg = { label: 'Bleisure возврат', date: fmtDate(leiReturn), options: leiOpts };
+    hotelIn = ret;
+    hotelOut = leiReturn;
+    headline = 'Командировка ' + fmtDate(depart) + ' — ' + fmtDate(ret) + ' · вернись ' + fmtDate(leiReturn);
+  }
+
+  const delta = round2(leisureLeg.options[0].price - businessLeg.options[0].price);
 
   const hotelsRes = await callTool('search_hotels', {
-    city_name: destination, check_in: ret, check_out: leisure, adults: adults, page_size: 8
+    city_name: destination, check_in: hotelIn, check_out: hotelOut, adults: adults, page_size: 8, view: 'full'
   });
   const hotels = (hotelsRes.hotels || []).filter(function (h) {
     return h.best_offer && h.best_offer.price && h.best_offer.price.amount != null;
   });
-
-  const outCheapest = outOpts[0].price;
-  const bizCheapest = bizOpts[0].price;
-  const leiCheapest = leiOpts[0].price;
-
-  const businessTotal = round2(outCheapest + bizCheapest);
-  const bleisureTotal = round2(outCheapest + leiCheapest);
-  const delta = round2(bleisureTotal - businessTotal);
 
   let recommended = null;
   let alternatives = [];
@@ -187,29 +212,25 @@ async function computeBleisure(q) {
     trip: {
       origin: origin,
       destination: destination,
-      departureDate: fmtDate(depart),
-      businessReturnDate: fmtDate(ret),
-      leisureReturnDate: fmtDate(leisure),
+      headline: headline,
       travelers: adults + (adults === 1 ? ' взрослый' : ' взрослых')
     },
     transport: {
       currency: 'RUB',
-      outbound: { label: 'Туда', date: fmtDate(depart), options: outOpts },
-      businessReturn: { label: 'Рабочий возврат', date: fmtDate(ret), options: bizOpts },
-      leisureReturn: { label: 'Bleisure возврат', date: fmtDate(leisure), options: leiOpts },
-      businessTotal: businessTotal,
-      bleisureTotal: bleisureTotal,
+      extendSide: extendSide,
+      businessLeg: businessLeg,
+      leisureLeg: leisureLeg,
       delta: delta
     },
     hotel: {
-      weekendNights: dayDiff(ret, leisure),
-      checkIn: fmtDate(ret),
-      checkOut: fmtDate(leisure),
+      weekendNights: dayDiff(hotelIn, hotelOut),
+      checkIn: fmtDate(hotelIn),
+      checkOut: fmtDate(hotelOut),
       recommended: recommended,
       alternatives: alternatives
     },
     split: {
-      company: businessTotal,
+      company: businessLeg.options[0].price,
       personalTransport: delta,
       personalHotel: personalHotel,
       personalTotal: personalTotal,

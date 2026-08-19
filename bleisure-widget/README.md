@@ -36,11 +36,13 @@ Vercel отдаёт `bleisure-widget/*` как статику, `/` редире�
 
 Кейс по умолчанию: **Москва → Тверь, 26–28.08.2026**, продление до 30.08.
 
-Виджет сравнивает **все типы транспорта** (самолёт / поезд / электричка / автобус).
-Пример на живых данных: туда дешевле всего электричка (668 ₽), обратно — автобус
-(654 ₽, в пт и в вс одинаково), поэтому дельта билета **0 ₽** — продление бесплатно,
-а главная личная часть — отель на выходные (~8 000 ₽ за 2 ночи). Цены меняются от
-запроса к запросу — это живые данные Tutu.
+Виджет сравнивает **все типы транспорта** (самолёт / поезд / автобус)
+только по той ноге, которая меняется для bleisure, и показывает фото отелей.
+
+- Поездка заканчивается в ср/чт/пт → предлагает **вернуться в воскресенье** (bleisure после).
+- Поездка начинается в **понедельник** → предлагает **приехать в субботу** (bleisure до).
+
+Цены меняются от запроса к запросу — это живые данные Tutu.
 
 ## Файлы
 
@@ -57,7 +59,7 @@ Vercel отдаёт `bleisure-widget/*` как статику, `/` редире�
 
 ```html
 <link rel="stylesheet" href="widget.css" />
-<div data-bleisure-widget='{ "trip": { "origin": "Москва", "destination": "Тверь", "departureDate": "26 авг · ср", "businessReturnDate": "28 авг · пт", "leisureReturnDate": "30 авг · вс" }, "transport": { ... }, "hotel": { ... }, "split": { ... } }'></div>
+<div data-bleisure-widget='{ "trip": { "origin": "Москва", "destination": "Тверь", "headline": "Командировка 26 авг · ср — 28 авг · пт · вернись 30 авг · вс" }, "transport": { ... }, "hotel": { ... }, "split": { ... } }'></div>
 <script src="widget.js"></script>
 ```
 
@@ -81,49 +83,46 @@ BleisureWidget.init(document.getElementById('root'), data);
 
 ```jsonc
 {
-  "trip": {           // origin, destination, departureDate, businessReturnDate, leisureReturnDate, travelers
+  "trip": {           // origin, destination, headline (готовый текст), travelers
     "origin": "Москва", "destination": "Тверь",
-    "departureDate": "26 авг · ср", "businessReturnDate": "28 авг · пт", "leisureReturnDate": "30 авг · вс"
+    "headline": "Командировка 26 авг · ср — 28 авг · пт · вернись 30 авг · вс"
   },
-  "transport": {      // currency + три ноги, в каждой — лучший вариант по каждому типу транспорта
+  "transport": {      // currency, extendSide, две ноги (рабочая vs bleisure) + дельта
     "currency": "RUB",
-    "outbound":        { "label": "Туда",            "date": "26 авг · ср", "options": [ { "mode", "modeLabel", "title", "time", "price", "url" } ] },
-    "businessReturn":  { "label": "Рабочий возврат",  "date": "28 авг · пт", "options": [ ... ] },
-    "leisureReturn":   { "label": "Bleisure возврат", "date": "30 авг · вс", "options": [ ... ] },
-    "businessTotal": 1322,
-    "bleisureTotal": 1322,
-    "delta": 0         // bleisureTotal - businessTotal (по самому дешёвому варианту каждой ноги)
+    "extendSide": "return",   // "return" | "departure"
+    "businessLeg": { "label": "Рабочий возврат",  "date": "28 авг · пт", "options": [ { "mode", "modeLabel", "title", "time", "price", "url" } ] },
+    "leisureLeg":  { "label": "Bleisure возврат", "date": "30 авг · вс", "options": [ ... ] },
+    "delta": 0               // leisureLeg.cheapest - businessLeg.cheapest
   },
   "hotel": {          // weekendNights, checkIn, checkOut
-    "recommended": { "name", "stars", "rating", "reviewCount", "meal", "freeCancellation", "price", "currency", "url" },
+    "recommended": { "name", "stars", "rating", "reviewCount", "meal", "freeCancellation", "price", "currency", "url", "photos": [] },
     "alternatives": [ { ... } ]
   },
   "split": {          // company, personalTransport, personalHotel, personalTotal, currency
-    "company": 1322, "personalTransport": 0,
+    "company": 654, "personalTransport": 0,
     "personalHotel": 7800, "personalTotal": 7800
   },
   "disclaimer": "Цены актуальны на момент поиска и могут измениться в корзине."
 }
 ```
 
-`mode` ∈ `railway` (Поезд) / `etrain` (Электричка) / `bus` (Автобус) / `avia` (Самолёт).
+- `mode` ∈ `railway` (Поезд) / `bus` (Автобус) / `avia` (Самолёт).
+- `hotel.recommended.photos` — массив URL фото (виджет листает стрелками / свайпом).
+- `split.company` — цена только рабочей ноги (нога «туда»/фиксированная не показывается).
 
 ## Откуда берётся расчёт (MCP-флоу)
 
-Для каждой ноги (туда / рабочий возврат / bleisure-возврат):
+1. Определяем сторону продления: выезд в **понедельник** → `extendSide="departure"` (выезд в субботу), иначе `"return"` (возврат в ближайшее воскресенье).
+2. Для меняющейся ноги (рабочая и bleisure-даты) — `search_multitransport` (`meta.modes_summary`), затем по каждому доступному типу `search_rail` / `search_bus` / `search_avia` (`page_size=1`).
+3. `search_hotels(назначение, уикенд, view="full")` — отель на выходные + фото (рекомендация = самый дешёвый с завтраком + бесплатной отменой).
 
-1. `search_multitransport` — какие типы транспорта вообще есть на маршруте и почём (`meta.modes_summary`).
-2. По каждому доступному типу — `search_rail` / `search_etrain` / `search_bus` / `search_avia` (`page_size=1`) — самый дешёвый вариант с деталями и ссылкой.
-3. `search_hotels(назначение, ret→leisure)` — отель на выходные (рекомендация = самый дешёвый с завтраком + бесплатной отменой).
+Ссылки — из `checkout_url` / `search_results_url` оффера (у отелей — `best_offer.checkout_url`).
 
-Ссылки берутся из `checkout_url` / `search_results_url` оффера (у отелей — `best_offer.checkout_url`).
-
-`businessTotal` / `bleisureTotal` считаются по самому дешёвому варианту каждой ноги (любой тип);
-`delta = bleisureTotal − businessTotal`; отель на выходные — личная часть целиком.
+`delta = leisureLeg.cheapest − businessLeg.cheapest`; отель на выходные — личная часть целиком.
 
 ## Примечания
 
-- Сравниваются все типы транспорта: если на маршруте нет аэропорта (как в Твери), виджет просто не покажет «Самолёт» и предложит поезд/электричку/автобус.
+- Сравниваются все типы транспорта: если на маршруте нет аэропорта (как в Твери), виджет просто не покажет «Самолёт» и предложит поезд/автобус.
 - Ссылки — `checkout_url`/`search_results_url` из оффера (у авиа это страница поиска, у поездов/автобусов — страница выбора мест).
 - Кэшбэк Tutu — бонусные баллы после оплаты, не скидка; в виджете из цены не вычитается.
 - Цены — живые, «от» (самый дешёвый тариф). В корзине могут отличаться (сбор Tutu).
